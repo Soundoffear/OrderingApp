@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">OrderingApp</string>
+
+    /* Bread Data */
+
+    <string name="sub15" translatable="false">SUB15</string>
+    <string name="sub30" translatable="false">SUB30</string>
+    <string name="wrap" translatable="false">WRAP</string>
+    <string name="salad" translatable="false">Sałatka</string>
+
+
+
 </resources>

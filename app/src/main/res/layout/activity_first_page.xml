@@ -6,4 +6,43 @@
     android:layout_height="match_parent"
     tools:context="com.ejoapps.m2d2_sub.orderingapp.FirstPageActivity">
 
+
+    <Button
+        android:id="@+id/order_sandwich"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Zamów Sandwich"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/order_catering"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Zamów Catering"
+        app:layout_constraintLeft_toLeftOf="@+id/order_sandwich"
+        app:layout_constraintRight_toRightOf="@id/order_sandwich"
+        app:layout_constraintTop_toBottomOf="@+id/order_sandwich" />
+
+    <EditText
+        android:id="@+id/input_test_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        app:layout_constraintLeft_toLeftOf="@+id/order_sandwich"
+        app:layout_constraintRight_toRightOf="@id/order_sandwich"
+        app:layout_constraintTop_toBottomOf="@+id/order_catering" />
+
+    <EditText
+        android:id="@+id/input_test_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        app:layout_constraintLeft_toLeftOf="@+id/order_sandwich"
+        app:layout_constraintRight_toRightOf="@id/order_sandwich"
+        app:layout_constraintTop_toBottomOf="@+id/input_test_1" />
+
 </android.support.constraint.ConstraintLayout>

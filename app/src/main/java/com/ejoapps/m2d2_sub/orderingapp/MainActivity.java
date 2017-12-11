@@ -1,5 +1,6 @@
 package com.ejoapps.m2d2_sub.orderingapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -102,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Log.d("NEW USER", "createUserWithEmail: success");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             tv_email.setText("Email: " + firebaseAuth.getCurrentUser().isEmailVerified());
+                            goToNextActivity();
                             updateUI(user);
                         } else {
                             Log.w("NEW USER", task.getException());
@@ -137,6 +141,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         return validate;
+    }
+
+    private void goToNextActivity() {
+        Intent intent = new Intent(MainActivity.this, FirstPageActivity.class);
+        startActivity(intent);
     }
 
     private void sendValidationEmail() {
