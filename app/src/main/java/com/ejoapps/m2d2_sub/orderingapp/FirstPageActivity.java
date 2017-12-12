@@ -7,8 +7,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.ejoapps.m2d2_sub.orderingapp.storage.Types;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -57,22 +59,50 @@ public class FirstPageActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        orderButton.setEnabled(false);
+        cateringButton.setEnabled(false);
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dbRef = database.getReference().child("sandwiches").child("types");
 
-        dbRef.addValueEventListener(new ValueEventListener() {
+        readDataFromFriebase(dbRef, new OnGetDataListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onSuccess(DataSnapshot dataSnapshot) {
 
                 getData((Map<String, Object>) dataSnapshot.getValue());
 
+                orderButton.setEnabled(true);
+                cateringButton.setEnabled(true);
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
+
+    }
+
+    private void readDataFromFriebase(DatabaseReference data, final OnGetDataListener onGetDataListener) {
+        onGetDataListener.onStart();
+
+        data.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                onGetDataListener.onSuccess(dataSnapshot);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                onGetDataListener.onFailure();
             }
         });
+
     }
 
     private void getData(Map<String, Object> dataSnap) {

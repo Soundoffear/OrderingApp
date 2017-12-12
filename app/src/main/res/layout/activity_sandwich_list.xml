@@ -11,10 +11,11 @@
         layout="@layout/sandwich_list_recy_views_all"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="64dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/sl_lin_buttonsLayout"/>
 
     <LinearLayout
         android:id="@+id/sl_lin_buttonsLayout"

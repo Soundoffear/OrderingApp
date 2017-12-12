@@ -1,17 +1,15 @@
 package com.ejoapps.m2d2_sub.orderingapp;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.ejoapps.m2d2_sub.orderingapp.adapters.TypeAndNumberAdapter;
-import com.ejoapps.m2d2_sub.orderingapp.storage.TypeAndNumberOfCarriersStorage;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SandwichListActivity extends AppCompatActivity {
 
