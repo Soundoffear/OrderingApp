@@ -1,6 +1,7 @@
 package com.ejoapps.m2d2_sub.orderingapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,8 +59,11 @@ public class QuantityAndTypeAdapter extends RecyclerView.Adapter<QuantityAndType
         holder.btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String sCurrentValue = quantityView.getText().toString();
+
+                quantityStart  = Integer.parseInt(sCurrentValue);
+
                 quantityStart++;
-                QuantityStorageClass.storageQuantity = quantityStart;
                 quantityView.setText(String.valueOf(quantityStart));
             }
         });
@@ -67,11 +71,13 @@ public class QuantityAndTypeAdapter extends RecyclerView.Adapter<QuantityAndType
         holder.btn_remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String sCurrentValue = quantityView.getText().toString();
+
+                quantityStart  = Integer.parseInt(sCurrentValue);
                 quantityStart--;
                 if(quantityStart < 0) {
                     quantityStart = 0;
                 }
-                QuantityStorageClass.storageQuantity = quantityStart;
                 quantityView.setText(String.valueOf(quantityStart));
             }
         });

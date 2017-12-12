@@ -23,12 +23,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".QuantityAndTypeActivity"
+        <activity
+            android:name=".QuantityAndTypeActivity"
             android:parentActivityName=".FirstPageActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".FirstPageActivity"/>
+                android:value=".FirstPageActivity" />
         </activity>
+        <activity android:name=".SandwichListActivity"></activity>
     </application>
 
 </manifest>

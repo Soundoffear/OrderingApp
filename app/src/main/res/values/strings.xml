@@ -7,6 +7,8 @@
     <string name="sub30" translatable="false">SUB30</string>
     <string name="wrap" translatable="false">WRAP</string>
     <string name="salad" translatable="false">Sałatka</string>
+    <string name="zr_b_nsandwich">Zrób \nSandwich</string>
+    <string name="tempPrice">0.00 PLN</string>
 
 
 </resources>
