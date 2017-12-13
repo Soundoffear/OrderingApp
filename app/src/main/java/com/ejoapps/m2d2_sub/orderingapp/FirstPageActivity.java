@@ -114,9 +114,5 @@ public class FirstPageActivity extends AppCompatActivity {
             keysString.add(singleKey);
         }
 
-        for (int i = 0; i < dataStrings.size(); i++) {
-            Log.d("Array values ", dataStrings.get(i));
-            Log.d("Array keys ", keysString.get(i));
-        }
     }
 }
