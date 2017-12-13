@@ -17,7 +17,7 @@
             android:id="@+id/sl_recView_sub30"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/holo_blue_bright"/>
+            android:background="@android:color/holo_green_dark"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/sl_recView_wrap"
@@ -28,7 +28,7 @@
             android:id="@+id/sl_recView_salad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/holo_blue_bright" />
+            android:background="@android:color/holo_green_dark" />
 
     </LinearLayout>
 </ScrollView>

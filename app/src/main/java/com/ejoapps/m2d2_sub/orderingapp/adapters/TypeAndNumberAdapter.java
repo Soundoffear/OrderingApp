@@ -1,13 +1,17 @@
 package com.ejoapps.m2d2_sub.orderingapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.ejoapps.m2d2_sub.orderingapp.QuantityAndTypeActivity;
 import com.ejoapps.m2d2_sub.orderingapp.R;
+import com.ejoapps.m2d2_sub.orderingapp.SandwichBuilderActivity;
 
 /**
  * Created by soundoffear on 12/12/2017.
@@ -43,6 +47,14 @@ public class TypeAndNumberAdapter extends RecyclerView.Adapter<TypeAndNumberAdap
         holder.tvSubDescTemp.setText(aNameOfItem);
         holder.tvPriceTemp.setText(R.string.tempPrice);
 
+        holder.btnBuildSandwich.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, SandwichBuilderActivity.class);
+                mContext.startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -56,12 +68,15 @@ public class TypeAndNumberAdapter extends RecyclerView.Adapter<TypeAndNumberAdap
         TextView tvSubDescTemp;
         TextView tvPriceTemp;
 
+        Button btnBuildSandwich;
+
         public TypeAndNumberViewHolder(View itemView) {
             super(itemView);
 
             tvSubNameTemp = itemView.findViewById(R.id.sub_details_sub_name_label);
             tvSubDescTemp = itemView.findViewById(R.id.sub_details_sub_description_label);
             tvPriceTemp = itemView.findViewById(R.id.sub_details_total_price_for_sub);
+            btnBuildSandwich = itemView.findViewById(R.id.sub_details_make_sandwich_btn);
         }
     }
 

@@ -7,10 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 
-import com.ejoapps.m2d2_sub.orderingapp.storage.Types;
-import com.google.android.gms.tasks.Task;
+import com.ejoapps.m2d2_sub.orderingapp.interfaces.OnGetDataListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

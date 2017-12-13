@@ -1,7 +1,6 @@
 package com.ejoapps.m2d2_sub.orderingapp.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +10,7 @@ import android.widget.TextView;
 
 import com.ejoapps.m2d2_sub.orderingapp.R;
 import com.ejoapps.m2d2_sub.orderingapp.storage.QuantityStorageClass;
-import com.ejoapps.m2d2_sub.orderingapp.storage.Types;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

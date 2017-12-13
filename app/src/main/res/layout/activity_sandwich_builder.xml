@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ejoapps.m2d2_sub.orderingapp.SandwichBuilderActivity">
+
+    <TextView
+        android:id="@+id/sub_build_sub_names_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="WYBIERZ SUB"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/sub_build_sub_names_recView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/sub_build_sub_names_label"
+        app:layout_constraintRight_toRightOf="@+id/sub_build_sub_names_label"
+        app:layout_constraintTop_toBottomOf="@+id/sub_build_sub_names_label" />
+
+    <TextView
+        android:id="@+id/sub_build_bread_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="BREAD"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="@+id/sub_build_sub_names_recView"
+        app:layout_constraintRight_toRightOf="@+id/sub_build_sub_names_recView"
+        app:layout_constraintTop_toBottomOf="@+id/sub_build_sub_names_recView" />
+
+    <RadioGroup
+        android:id="@+id/sub_build_radio_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sub_build_bread_label">
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/sub_build_paid_add_ons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PLATNE DODATKI"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="@+id/sub_build_radio_button"
+        app:layout_constraintRight_toRightOf="@+id/sub_build_radio_button"
+        app:layout_constraintTop_toBottomOf="@+id/sub_build_radio_button" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/sub_build_paid_add_ons_recView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/sub_build_paid_add_ons"
+        app:layout_constraintRight_toRightOf="@+id/sub_build_paid_add_ons"
+        app:layout_constraintTop_toBottomOf="@+id/sub_build_paid_add_ons" />
+
+
+</android.support.constraint.ConstraintLayout>

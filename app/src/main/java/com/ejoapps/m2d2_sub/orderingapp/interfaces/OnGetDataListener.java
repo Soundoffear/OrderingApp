@@ -1,4 +1,4 @@
-package com.ejoapps.m2d2_sub.orderingapp;
+package com.ejoapps.m2d2_sub.orderingapp.interfaces;
 
 import com.google.firebase.database.DataSnapshot;
 

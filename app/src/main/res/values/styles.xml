@@ -8,4 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="SandwichList" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="colorPrimary">#8BC34A</item>
+        <item name="colorPrimaryDark">#4CAF50</item>
+        <item name="colorAccent">#03A9F4</item>
+    </style>
+
 </resources>

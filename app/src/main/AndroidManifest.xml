@@ -30,7 +30,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".FirstPageActivity" />
         </activity>
-        <activity android:name=".SandwichListActivity"></activity>
+        <activity android:name=".SandwichListActivity"
+            android:theme="@style/SandwichList"/>
+        <activity android:name=".SandwichBuilderActivity"></activity>
     </application>
 
 </manifest>

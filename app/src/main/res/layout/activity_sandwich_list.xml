@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.ejoapps.m2d2_sub.orderingapp.SandwichListActivity"
-    android:background="@android:color/holo_blue_light">
+    android:background="@android:color/holo_green_light">
 
     <include
         layout="@layout/sandwich_list_recy_views_all"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
         android:layout_marginBottom="64dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
