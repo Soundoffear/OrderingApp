@@ -9,6 +9,15 @@
     <string name="salad" translatable="false">Sałatka</string>
     <string name="zr_b_nsandwich">Zrób \nSandwich</string>
     <string name="tempPrice">0.00 PLN</string>
+    <string name="paid_add_ons">PLATNE DODATKI</string>
+    <string name="bread">BREAD</string>
+    <string name="choose_sub">WYBIERZ SUB</string>
+    <string name="vegetables">WARZYWA</string>
+    <string name="remove_item_by_one">remove item by one</string>
+    <string name="zero_pln">0.00 PLN</string>
+    <string name="zero">0</string>
+    <string name="final_price">Cena Koncowa</string>
+    <string name="sauces">SAUCES</string>
 
 
 </resources>

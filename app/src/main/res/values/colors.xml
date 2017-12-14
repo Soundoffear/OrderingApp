@@ -3,4 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="builderTitles">#673AB7</color>
+    <color name="builderBackGround">#9575CD</color>
+    <color name="builderCheckOutHolder">#311B92</color>
 </resources>

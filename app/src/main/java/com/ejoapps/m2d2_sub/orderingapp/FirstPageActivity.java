@@ -8,6 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.ejoapps.m2d2_sub.orderingapp.containers.SandwichNameData;
+import com.ejoapps.m2d2_sub.orderingapp.containers.SauceData;
+import com.ejoapps.m2d2_sub.orderingapp.containers.VegetablesData;
+import com.ejoapps.m2d2_sub.orderingapp.database_preload.ContractSandwichBuilder;
+import com.ejoapps.m2d2_sub.orderingapp.database_preload.SandwichBuilderDatabase;
 import com.ejoapps.m2d2_sub.orderingapp.interfaces.OnGetDataListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -51,6 +56,15 @@ public class FirstPageActivity extends AppCompatActivity {
             }
         });
 
+        // Testing DataBase inputs;
+
+        SandwichBuilderDatabase sandwichBuilderDatabase = new SandwichBuilderDatabase(this);
+        List<VegetablesData> sandwichNameDataList = sandwichBuilderDatabase.getVegeDataAll();
+
+        for(int i = 0; i < sandwichNameDataList.size(); i++) {
+            Log.d("Test test test ---->>>", sandwichNameDataList.get(i).getVegetables());
+        }
+
     }
 
     @Override
@@ -63,7 +77,7 @@ public class FirstPageActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dbRef = database.getReference().child("sandwiches").child("types");
 
-        readDataFromFriebase(dbRef, new OnGetDataListener() {
+        readDataFromFirebase(dbRef, new OnGetDataListener() {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
 
@@ -86,7 +100,7 @@ public class FirstPageActivity extends AppCompatActivity {
 
     }
 
-    private void readDataFromFriebase(DatabaseReference data, final OnGetDataListener onGetDataListener) {
+    private void readDataFromFirebase(DatabaseReference data, final OnGetDataListener onGetDataListener) {
         onGetDataListener.onStart();
 
         data.addListenerForSingleValueEvent(new ValueEventListener() {
