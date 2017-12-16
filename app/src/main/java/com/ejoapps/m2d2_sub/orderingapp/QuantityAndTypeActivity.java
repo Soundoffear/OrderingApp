@@ -47,9 +47,17 @@ public class QuantityAndTypeActivity extends AppCompatActivity implements View.O
 
     private ArrayList<String> tempKeyList = new ArrayList<>();
     public static final String TEMP_KEYS = "array-of-temp-keys";
+    public static final String ARRAY_KEY_BUNDLE = "array-bundle";
+    public static final ArrayList<String> CARRIES_CHECK = new ArrayList<>();
+
+    public static final ArrayList<Integer> CARRIES_QUANTITY = new ArrayList<>();
+    private Bundle arrayKeysBundle = new Bundle();
 
     @Override
     public void onClick(View v) {
+
+        CARRIES_CHECK.clear();
+        CARRIES_QUANTITY.clear();
 
         int id = v.getId();
         switch (id) {
@@ -60,16 +68,19 @@ public class QuantityAndTypeActivity extends AppCompatActivity implements View.O
                 for(int i = 0; i < recyclerView.getChildCount();i++) {
                     TextView recViewNameTV = recyclerView.getChildAt(i).findViewById(R.id.recyclerViewTypeName);
                     Log.d("Recycler Text View Name", recViewNameTV.getText().toString());
-                    tempKeyList.add(recViewNameTV.getText().toString());
+                    CARRIES_CHECK.add(recViewNameTV.getText().toString());
                     TextView recyclerViewQuantity = recyclerView.getChildAt(i).findViewById(R.id.recyclerViewQuantity);
                     Log.d("Recycler Text View Qua", recyclerViewQuantity.getText().toString());
                     int sandwichValue = Integer.parseInt(recyclerViewQuantity.getText().toString());
-
-                    intent.putExtra(recViewNameTV.getText().toString(), sandwichValue);
+                    CARRIES_QUANTITY.add(sandwichValue);
+                    Bundle dataToQuantityAndTypeActivity = new Bundle();
+                    dataToQuantityAndTypeActivity.putInt(CARRIES_CHECK.get(i), sandwichValue);
+                    intent.putExtras(dataToQuantityAndTypeActivity);
                 }
 
-                intent.putStringArrayListExtra(TEMP_KEYS, tempKeyList);
-
+                arrayKeysBundle.putStringArrayList(ARRAY_KEY_BUNDLE, CARRIES_CHECK);
+                intent.putStringArrayListExtra(TEMP_KEYS, CARRIES_CHECK);
+                intent.putExtras(arrayKeysBundle);
                 startActivity(intent);
 
                 break;

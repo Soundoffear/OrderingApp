@@ -45,6 +45,7 @@ public class QuantityAndTypeAdapter extends RecyclerView.Adapter<QuantityAndType
     public void onBindViewHolder(QuantityViewHolder holder, int position) {
 
         final TextView quantityView = holder.tv_Quantity;
+        // not yet finished, on back should load from QuantityStorageClass
         if(prevIsOrder) {
             quantityStart = 0;
         } else {

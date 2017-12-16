@@ -5,10 +5,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.ejoapps.m2d2_sub.orderingapp.adapters.PaidAddOnsAdapter;
 import com.ejoapps.m2d2_sub.orderingapp.adapters.SandwichNamesAndDescAdapter;
@@ -19,18 +23,12 @@ import com.ejoapps.m2d2_sub.orderingapp.containers.SauceData;
 import com.ejoapps.m2d2_sub.orderingapp.containers.VegetablesData;
 import com.ejoapps.m2d2_sub.orderingapp.database_preload.ContractSandwichBuilder;
 import com.ejoapps.m2d2_sub.orderingapp.database_preload.SandwichBuilderDatabase;
-import com.ejoapps.m2d2_sub.orderingapp.interfaces.OnGetDataListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.ejoapps.m2d2_sub.orderingapp.database_preload.SandwichFinalDatabase;
+import com.ejoapps.m2d2_sub.orderingapp.storage.SandwichListStorage;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-public class SandwichBuilderActivity extends AppCompatActivity {
+public class SandwichBuilderActivity extends AppCompatActivity implements View.OnClickListener {
 
     private List<BreadTypesData> breadTypesList;
     private List<SandwichNameData> sandwichNameList;
@@ -45,14 +43,27 @@ public class SandwichBuilderActivity extends AppCompatActivity {
     LinearLayout ll_saucesHolder;
 
     RadioGroup rg_bread;
+    RadioButton[] radioButton;
+
+    CheckBox[] vegeCBs;
+    CheckBox[] saucesCB;
+
+    public static TextView finalPrice;
+
+    Button orderBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sandwich_builder);
 
+        finalPrice = findViewById(R.id.sub_build_tv_total_final_price_for_sub_value);
         rg_bread = findViewById(R.id.sub_build_radio_button);
+        orderBtn = findViewById(R.id.sub_build_btn_confirm_sub);
 
+        orderBtn.setOnClickListener(this);
+
+        Log.d("Test temp Keys 3", SandwichListStorage.allCarriersTogether.get(SandwichListStorage.positionFromToReplace));
         SandwichBuilderDatabase sandwichBuilderDatabase = new SandwichBuilderDatabase(this);
         sandwichNameList = sandwichBuilderDatabase.getSandwichNameAllData(ContractSandwichBuilder.SandwichNames.TABLE_NAME_SANDWICH_NAMES);
 
@@ -65,8 +76,8 @@ public class SandwichBuilderActivity extends AppCompatActivity {
 
         breadTypesList = sandwichBuilderDatabase.getBreadTypeAllData();
         // Create RadioButton and populate RadioGroup with it
-        RadioButton[] radioButton = new RadioButton[breadTypesList.size()];
-        for(int i = 0; i < breadTypesList.size();i++) {
+        radioButton = new RadioButton[breadTypesList.size()];
+        for (int i = 0; i < breadTypesList.size(); i++) {
             radioButton[i] = new RadioButton(this);
             radioButton[i].setText(breadTypesList.get(i).getBreadType());
             radioButton[i].setTextSize(16f);
@@ -87,8 +98,8 @@ public class SandwichBuilderActivity extends AppCompatActivity {
         // Create Vegetable and populate LinearLayout with CheckBoxes
         vegeList = sandwichBuilderDatabase.getVegeDataAll();
         ll_vegetablesHolder = findViewById(R.id.sub_build_vegetables_checkBox_holder);
-        CheckBox[] vegeCBs = new CheckBox[vegeList.size()];
-        for(int i = 0; i < vegeList.size(); i++) {
+        vegeCBs = new CheckBox[vegeList.size()];
+        for (int i = 0; i < vegeList.size(); i++) {
             vegeCBs[i] = new CheckBox(this);
             vegeCBs[i].setText(vegeList.get(i).getVegetables());
             vegeCBs[i].setTextSize(16f);
@@ -99,8 +110,8 @@ public class SandwichBuilderActivity extends AppCompatActivity {
         // Create Sauces and populate LinearLayout with CheckBoxes
         sauceList = sandwichBuilderDatabase.getSauceDataAll();
         ll_saucesHolder = findViewById(R.id.sub_build_sauces_checkBox_holder);
-        CheckBox[] saucesCB = new CheckBox[sauceList.size()];
-        for(int i = 0;i < sauceList.size(); i++) {
+        saucesCB = new CheckBox[sauceList.size()];
+        for (int i = 0; i < sauceList.size(); i++) {
             saucesCB[i] = new CheckBox(this);
             saucesCB[i].setText(sauceList.get(i).getSauces());
             saucesCB[i].setTextSize(16f);
@@ -109,5 +120,76 @@ public class SandwichBuilderActivity extends AppCompatActivity {
         }
 
     }
+
+
+    public static final void setFinalPrice(String value) {
+        finalPrice.setText(value);
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.sub_build_btn_confirm_sub:
+                SandwichFinalDatabase finalDatabase = new SandwichFinalDatabase(this);
+
+                String sandwichName = null;
+                for (int i = 0; i < sandwichNDP.getAdapter().getItemCount(); i++) {
+                    CheckBox checkBox = sandwichNDP.getChildAt(i).findViewById(R.id.sub_build_list_selected_sandwich_check_box);
+                    if (checkBox.isChecked()) {
+                        sandwichName = checkBox.getText().toString();
+                    }
+                }
+
+                String breadType = null;
+                for (int i = 0; i < radioButton.length; i++) {
+                    if (radioButton[i].isChecked()) {
+                        breadType = radioButton[i].getText().toString();
+                    }
+                }
+
+                String paidAdds = null;
+                for (int i = 0; i < paidAddsRecView.getChildCount(); i++) {
+                    TextView tvQuantity = paidAddsRecView.getChildAt(i).findViewById(R.id.sub_build_paid_adds_quantity);
+                    TextView tvPaidName = paidAddsRecView.getChildAt(i).findViewById(R.id.sub_build_paid_adds_name_label);
+                    int intQuantity = Integer.parseInt(tvQuantity.getText().toString());
+                    if (intQuantity > 0) {
+                        paidAdds = tvPaidName.getText().toString() + "_" + tvQuantity.getText().toString();
+                    }
+                }
+
+                StringBuilder allVeges = new StringBuilder();
+                for (CheckBox checked : vegeCBs) {
+                    if (checked.isChecked()) {
+                        String tempName = checked.getText().toString();
+                        allVeges.append(tempName).append("_");
+                    }
+                }
+
+                StringBuilder allSauces = new StringBuilder();
+                for (CheckBox checkedSauce : saucesCB) {
+                    if (checkedSauce.isChecked()) {
+                        String tempName = checkedSauce.getText().toString();
+                        allSauces.append(tempName).append("_");
+                    }
+                }
+
+                StringBuilder choosenSandwichAndPrice = new StringBuilder();
+                choosenSandwichAndPrice.append(sandwichName)
+                        .append("_")
+                        .append("BLA BLA BLA")
+                        .append("_")
+                        .append(finalPrice.getText().toString() + " PLN");
+                SandwichListStorage.allCarriersTogether.remove(SandwichListStorage.positionFromToReplace);
+                SandwichListStorage.allCarriersTogether.add(SandwichListStorage.positionFromToReplace, choosenSandwichAndPrice.toString());
+
+                Log.d("Test fetching data", choosenSandwichAndPrice.toString());
+                break;
+        }
+    }
+
+
+    //TODO Add method for summing all of the selected item together
+    //TODO Add Method to confirm and remember all selected values (Database with updates, etc.)
 
 }

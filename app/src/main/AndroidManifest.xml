@@ -31,8 +31,17 @@
                 android:value=".FirstPageActivity" />
         </activity>
         <activity android:name=".SandwichListActivity"
-            android:theme="@style/SandwichList"/>
-        <activity android:name=".SandwichBuilderActivity"></activity>
+            android:theme="@style/SandwichList"
+            android:parentActivityName=".QuantityAndTypeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".QuantityAndTypeActivity" />
+        </activity>
+        <activity android:name=".SandwichBuilderActivity"
+            android:parentActivityName=".SandwichListActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SandwichListActivity" />
+        </activity>
     </application>
 
 </manifest>

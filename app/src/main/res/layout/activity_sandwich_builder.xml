@@ -201,7 +201,7 @@
             android:textSize="16sp" />
 
         <Button
-            android:id="@+id/confirm_sub"
+            android:id="@+id/sub_build_btn_confirm_sub"
             style="?attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

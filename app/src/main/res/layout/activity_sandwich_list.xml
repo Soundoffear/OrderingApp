@@ -4,19 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ejoapps.m2d2_sub.orderingapp.SandwichListActivity"
-    android:background="@android:color/holo_green_light">
+    android:background="@android:color/holo_green_light"
+    tools:context="com.ejoapps.m2d2_sub.orderingapp.SandwichListActivity">
 
-    <include
-        layout="@layout/sandwich_list_recy_views_all"
+    <ScrollView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
-        android:layout_marginBottom="64dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/sl_lin_buttonsLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/sl_lin_buttonsLayout"/>
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include
+            layout="@layout/sandwich_list_recy_views_all"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/sl_lin_buttonsLayout"
@@ -32,14 +36,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="CANCEL"/>
+            android:text="CANCEL" />
 
         <Button
             android:id="@+id/sl_btn_checkout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Podsumowanie"/>
+            android:text="Podsumowanie" />
 
     </LinearLayout>
 

@@ -1,17 +1,16 @@
 package com.ejoapps.m2d2_sub.orderingapp.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
-import com.ejoapps.m2d2_sub.orderingapp.QuantityAndTypeActivity;
 import com.ejoapps.m2d2_sub.orderingapp.R;
-import com.ejoapps.m2d2_sub.orderingapp.SandwichBuilderActivity;
+import com.ejoapps.m2d2_sub.orderingapp.interfaces.TypeAndNumberClickListener;
+
+import java.util.List;
 
 /**
  * Created by soundoffear on 12/12/2017.
@@ -20,13 +19,14 @@ import com.ejoapps.m2d2_sub.orderingapp.SandwichBuilderActivity;
 public class TypeAndNumberAdapter extends RecyclerView.Adapter<TypeAndNumberAdapter.TypeAndNumberViewHolder> {
 
     private Context mContext;
-    private int aNoOfItems;
-    private String aNameOfItem;
+    private List<String> listOfItems;
 
-    public TypeAndNumberAdapter(Context context, int noOfItems, String nameOfItem) {
+    public static TypeAndNumberClickListener numberClickListener;
+
+    public TypeAndNumberAdapter(Context context, List<String> stringList, TypeAndNumberClickListener typeAndNumberClickListener) {
         this.mContext = context;
-        this.aNoOfItems = noOfItems;
-        this.aNameOfItem = nameOfItem;
+        this.listOfItems = stringList;
+        numberClickListener = typeAndNumberClickListener;
     }
 
     @Override
@@ -43,32 +43,24 @@ public class TypeAndNumberAdapter extends RecyclerView.Adapter<TypeAndNumberAdap
     @Override
     public void onBindViewHolder(TypeAndNumberViewHolder holder, int position) {
 
-        holder.tvSubNameTemp.setText(aNameOfItem);
-        holder.tvSubDescTemp.setText(aNameOfItem);
-        holder.tvPriceTemp.setText(R.string.tempPrice);
+        String[] splittedString = listOfItems.get(position).split("_");
 
-        holder.btnBuildSandwich.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, SandwichBuilderActivity.class);
-                mContext.startActivity(intent);
-            }
-        });
+        holder.tvSubNameTemp.setText(splittedString[0]);
+        holder.tvSubDescTemp.setText(splittedString[1]);
+        holder.tvPriceTemp.setText(splittedString[2]);
 
     }
 
     @Override
     public int getItemCount() {
-        return aNoOfItems;
+        return listOfItems.size();
     }
 
-    class TypeAndNumberViewHolder extends RecyclerView.ViewHolder {
+    public static class TypeAndNumberViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView tvSubNameTemp;
         TextView tvSubDescTemp;
         TextView tvPriceTemp;
-
-        Button btnBuildSandwich;
 
         public TypeAndNumberViewHolder(View itemView) {
             super(itemView);
@@ -76,7 +68,14 @@ public class TypeAndNumberAdapter extends RecyclerView.Adapter<TypeAndNumberAdap
             tvSubNameTemp = itemView.findViewById(R.id.sub_details_sub_name_label);
             tvSubDescTemp = itemView.findViewById(R.id.sub_details_sub_description_label);
             tvPriceTemp = itemView.findViewById(R.id.sub_details_total_price_for_sub);
-            btnBuildSandwich = itemView.findViewById(R.id.sub_details_make_sandwich_btn);
+
+            itemView.setOnClickListener(this);
+        }
+
+
+        @Override
+        public void onClick(View v) {
+            numberClickListener.onRecyclerViewClick(v, this.getLayoutPosition());
         }
     }
 
