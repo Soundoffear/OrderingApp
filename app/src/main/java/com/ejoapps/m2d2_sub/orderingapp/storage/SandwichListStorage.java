@@ -18,7 +18,7 @@ public class SandwichListStorage {
 
     public static boolean isSandwichBuilt = true;
 
-    public static String carrierType;
+    public static double allSandwichesTogether;
 
     public static List<String> allCarriersTogether = new ArrayList<>();
 

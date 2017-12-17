@@ -24,6 +24,7 @@ public class SandwichListActivity extends AppCompatActivity implements TypeAndNu
     private RecyclerView sub15RecView;
     ArrayList<String> tempKeys;
     ArrayList<Integer> tempQuantity;
+    public static final String FINAL_PRICE_CALCULATED = "final-price-all";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,11 +62,18 @@ public class SandwichListActivity extends AppCompatActivity implements TypeAndNu
                 SandwichFinalDatabase sandwichFinalDatabase = new SandwichFinalDatabase(getApplicationContext());
                 List<FinalSandwichData> newFinalData = sandwichFinalDatabase.getAllFinalSubData();
                 Log.d("TESTING BUTTON", "TESTING BUTTON");
+                double finalPriceValue = 0;
                 for(int i = 0; i < newFinalData.size(); i++) {
-                    Log.d("Testing Final DB:", newFinalData.get(i).getSubTag() + " " + newFinalData.get(i).getSubName());
+                    Log.d("Testing Final DB:", newFinalData.get(i).getSubPrice() + " " + newFinalData.get(i).getSubName());
+                    String fPrice = newFinalData.get(i).getSubPrice();
+                    String[] singlePrice = fPrice.split(" ");
+                    double singlePriceDouble = Double.parseDouble(singlePrice[0]);
+                    finalPriceValue += singlePriceDouble;
                 }
 
                 Intent intent = new Intent(SandwichListActivity.this, OrderSummaryActivity.class);
+                intent.putExtra(FINAL_PRICE_CALCULATED, finalPriceValue);
+
                 startActivity(intent);
             }
         });

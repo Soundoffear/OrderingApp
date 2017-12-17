@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.ejoapps.m2d2_sub.orderingapp.R;
 import com.ejoapps.m2d2_sub.orderingapp.containers.FinalSandwichData;
+import com.ejoapps.m2d2_sub.orderingapp.storage.SandwichListStorage;
 
 import java.util.List;
 
@@ -106,5 +107,11 @@ public class OrderSummaryAdapter extends RecyclerView.Adapter<OrderSummaryAdapte
         }
 
         return builtString.toString();
+    }
+
+    private double getPriceDouble(String stringCurrency) {
+
+        String[] splittedFromCurrency = stringCurrency.split(" ");
+        return Double.parseDouble(splittedFromCurrency[0]);
     }
 }
