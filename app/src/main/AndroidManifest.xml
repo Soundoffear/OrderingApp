@@ -30,16 +30,25 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".FirstPageActivity" />
         </activity>
-        <activity android:name=".SandwichListActivity"
-            android:theme="@style/SandwichList"
-            android:parentActivityName=".QuantityAndTypeActivity">
+        <activity
+            android:name=".SandwichListActivity"
+            android:parentActivityName=".QuantityAndTypeActivity"
+            android:theme="@style/SandwichList">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".QuantityAndTypeActivity" />
         </activity>
-        <activity android:name=".SandwichBuilderActivity"
+        <activity
+            android:name=".SandwichBuilderActivity"
             android:parentActivityName=".SandwichListActivity">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SandwichListActivity" />
+        </activity>
+        <activity android:name=".OrderSummaryActivity"
+            android:parentActivityName=".SandwichListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SandwichListActivity" />
         </activity>
     </application>

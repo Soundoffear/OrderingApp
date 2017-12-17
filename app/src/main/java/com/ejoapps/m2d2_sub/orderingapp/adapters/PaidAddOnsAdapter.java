@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.ejoapps.m2d2_sub.orderingapp.R;
 import com.ejoapps.m2d2_sub.orderingapp.SandwichBuilderActivity;
 import com.ejoapps.m2d2_sub.orderingapp.containers.PaidAddOnsData;
+import com.ejoapps.m2d2_sub.orderingapp.storage.SandwichListStorage;
 import com.ejoapps.m2d2_sub.orderingapp.storage.TotalSandwichValue;
 
 import java.text.DecimalFormat;
@@ -25,10 +26,12 @@ public class PaidAddOnsAdapter extends RecyclerView.Adapter<PaidAddOnsAdapter.Pa
 
     private Context mContext;
     private List<PaidAddOnsData> paidAddOnsDataList;
+    private String carrier;
 
-    public PaidAddOnsAdapter(Context mContext, List<PaidAddOnsData> paidAddOnsDataList) {
+    public PaidAddOnsAdapter(Context mContext, List<PaidAddOnsData> paidAddOnsDataList, String carrierType) {
         this.mContext = mContext;
         this.paidAddOnsDataList = paidAddOnsDataList;
+        this.carrier = carrierType;
     }
 
     @Override
@@ -43,38 +46,73 @@ public class PaidAddOnsAdapter extends RecyclerView.Adapter<PaidAddOnsAdapter.Pa
         return new PaidAddsViewHolder(view);
     }
 
+    private double priceDouble;
+
     @Override
     public void onBindViewHolder(final PaidAddsViewHolder holder, final int position) {
         final String nameString = paidAddOnsDataList.get(position).getPaidAddOnName();
         final String price = paidAddOnsDataList.get(position).getPaidAddOnPrice();
-        final double priceDouble = Double.parseDouble(price);
+        if(carrier.equals(SandwichListStorage.CARRIER_SUB15)) {
+            priceDouble = Double.parseDouble(price);
+        } else if (carrier.equals(SandwichListStorage.CARRIER_SUB30)) {
+            priceDouble = Double.parseDouble(price) * 2;
+        } else if (carrier.equals(SandwichListStorage.CARRIER_WRAP)) {
+            priceDouble = Double.parseDouble(price);
+        } else if (carrier.equals(SandwichListStorage.CARRIER_SALAD)) {
+            priceDouble = Double.parseDouble(price);
+        }
         holder.tvPaidName.setText(nameString);
-        holder.tvPriceSingle.setText(price + " PLN ");
+
+        TotalSandwichValue.paidAddOns = 0;
+
+        DecimalFormat decimalPrice = new DecimalFormat("0.00");
+        String decimalFormattedPrice = decimalPrice.format(priceDouble) + " PLN";
+
+        holder.tvPriceSingle.setText(decimalFormattedPrice);
+
+        Log.d("CHEESE TEST", String.valueOf(priceDouble));
+        priceDouble = Double.parseDouble(paidAddOnsDataList.get(position).getPaidAddOnPrice());
 
         holder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String toSplit = holder.tvPriceTotal.getText().toString();
+                String[] splittedString = toSplit.split(" ");
+                double privatePriceDouble = Double.parseDouble(splittedString[0]);
                 String currentQuantity = holder.tvIncrement.getText().toString();
                 double currentQDouble = Double.parseDouble(currentQuantity);
                 currentQDouble++;
                 holder.tvIncrement.setText(String.valueOf((int) currentQDouble));
 
-                Log.d("CHEESE TEST", (currentQDouble > 1) + " " + nameString.equals("Cheese"));
+                Log.d("CHEESE TEST", (currentQDouble > 1) + " " + String.valueOf(priceDouble));
+
+                if(carrier.equals(SandwichListStorage.CARRIER_SUB15)) {
+                    priceDouble = Double.parseDouble(price);
+                } else if (carrier.equals(SandwichListStorage.CARRIER_SUB30)) {
+                    priceDouble = Double.parseDouble(price) * 2;
+                } else if (carrier.equals(SandwichListStorage.CARRIER_WRAP)) {
+                    priceDouble = Double.parseDouble(price);
+                } else if (carrier.equals(SandwichListStorage.CARRIER_SALAD)) {
+                    priceDouble = Double.parseDouble(price);
+                }
 
                 if (nameString.equals("Cheese")) {
                     if (currentQDouble > 1) {
                         TotalSandwichValue.paidAddOns = TotalSandwichValue.paidAddOns + priceDouble;
+                        privatePriceDouble = privatePriceDouble + priceDouble;
+                        Log.d("Test 0", String.valueOf(TotalSandwichValue.paidAddOns) + " " + String.valueOf(priceDouble) + " " + TotalSandwichValue.paidAddOns);
                         SandwichBuilderActivity.setFinalPrice(TotalSandwichValue.finalValue());
-                        String finalPrice = setAlwaysTwoDec(updateQuanityAndFinalPrice((currentQDouble - 1), price)) + " PLN";
+                        String finalPrice = setAlwaysTwoDec(privatePriceDouble) + " PLN";
+                        Log.d("Test:", String.valueOf(finalPrice));
                         holder.tvPriceTotal.setText(finalPrice);
                     }
                 } else {
-                    String finalPrice = setAlwaysTwoDec(updateQuanityAndFinalPrice(currentQDouble, price)) + " PLN";
-                    holder.tvPriceTotal.setText(finalPrice);
                     TotalSandwichValue.paidAddOns = TotalSandwichValue.paidAddOns + priceDouble;
+                    privatePriceDouble = privatePriceDouble + priceDouble;
+                    String finalPrice = setAlwaysTwoDec(privatePriceDouble) + " PLN";
+                    holder.tvPriceTotal.setText(finalPrice);
                     SandwichBuilderActivity.setFinalPrice(TotalSandwichValue.finalValue());
                 }
-
 
             }
         });
@@ -82,28 +120,49 @@ public class PaidAddOnsAdapter extends RecyclerView.Adapter<PaidAddOnsAdapter.Pa
         holder.btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String toSplit = holder.tvPriceTotal.getText().toString();
+                String[] splittedString = toSplit.split(" ");
+                double privatePriceDouble = Double.parseDouble(splittedString[0]);
                 final String nameString = paidAddOnsDataList.get(position).getPaidAddOnName();
                 final String price = paidAddOnsDataList.get(position).getPaidAddOnPrice();
-                final double priceDouble = Double.parseDouble(price);
+                //final double priceDouble = Double.parseDouble(price);
                 String currentQuantity = holder.tvIncrement.getText().toString();
                 double currentQDouble = Double.parseDouble(currentQuantity);
-                if (currentQDouble > 0) {
+
+                if(carrier.equals(SandwichListStorage.CARRIER_SUB15)) {
+                    priceDouble = Double.parseDouble(price);
+                } else if (carrier.equals(SandwichListStorage.CARRIER_SUB30)) {
+                    priceDouble = Double.parseDouble(price) * 2;
+                } else if (carrier.equals(SandwichListStorage.CARRIER_WRAP)) {
+                    priceDouble = Double.parseDouble(price);
+                } else if (carrier.equals(SandwichListStorage.CARRIER_SALAD)) {
+                    priceDouble = Double.parseDouble(price);
+                }
+
+                if (currentQDouble >= 1) {
+
+                    currentQDouble--;
                     if(nameString.equals("Cheese")) {
-                        if(currentQDouble > 1) {
+                        if(currentQDouble > 0) {
+                            Log.d("Test 3", String.valueOf(TotalSandwichValue.paidAddOns) + " " + priceDouble);
                             TotalSandwichValue.paidAddOns = TotalSandwichValue.paidAddOns - priceDouble;
+                            privatePriceDouble = privatePriceDouble - priceDouble;
+                            Log.d("Test 4", String.valueOf(TotalSandwichValue.paidAddOns) + " " + priceDouble);
                             SandwichBuilderActivity.setFinalPrice(TotalSandwichValue.finalValue());
+                            String finalPrice = setAlwaysTwoDec(privatePriceDouble) + " PLN";
+                            holder.tvPriceTotal.setText(finalPrice);
                         }
                     } else {
                         TotalSandwichValue.paidAddOns = TotalSandwichValue.paidAddOns - priceDouble;
+                        privatePriceDouble = privatePriceDouble - priceDouble;
                         SandwichBuilderActivity.setFinalPrice(TotalSandwichValue.finalValue());
+                        String finalPrice = setAlwaysTwoDec(privatePriceDouble) + " PLN";
+                        holder.tvPriceTotal.setText(finalPrice);
                     }
-                    currentQDouble--;
                 } else {
                     currentQDouble = 0;
                 }
                 holder.tvIncrement.setText(String.valueOf((int) currentQDouble));
-                String finalPrice = setAlwaysTwoDec(updateQuanityAndFinalPrice(currentQDouble, price)) + " PLN";
-                holder.tvPriceTotal.setText(finalPrice);
 
             }
         });
@@ -112,16 +171,13 @@ public class PaidAddOnsAdapter extends RecyclerView.Adapter<PaidAddOnsAdapter.Pa
 
     private String setAlwaysTwoDec(double value) {
 
-        double twoDecDouble = value * 100;
-        twoDecDouble = twoDecDouble / 100;
-
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
-        return decimalFormat.format(twoDecDouble);
+        return decimalFormat.format(value);
     }
 
-    private double updateQuanityAndFinalPrice(double currentQuanity, String valuePerOne) {
-        double finalValueDouble = currentQuanity * Double.parseDouble(valuePerOne);
+    private double updateQuanityAndFinalPrice(double currentQuanity, double valuePerOne) {
+        double finalValueDouble = 0;
         return finalValueDouble;
     }
 

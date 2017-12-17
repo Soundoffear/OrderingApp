@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/summary_tv_sandwich_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        tools:text="Sandwich Name"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/summary_price"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/summary_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintLeft_toRightOf="@+id/summary_tv_sandwich_label"
+        app:layout_constraintTop_toTopOf="@+id/summary_tv_sandwich_label"
+        app:layout_constraintBottom_toBottomOf="@+id/summary_tv_sandwich_label"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:text="20.20 PLN"/>
+
+    <TextView
+        android:id="@+id/summary_description_tv_sandwich"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        tools:text="Description"
+        app:layout_constraintTop_toBottomOf="@+id/summary_tv_sandwich_label"
+        app:layout_constraintLeft_toLeftOf="@+id/summary_tv_sandwich_label"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/summary_bread_tv_sandwich"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        tools:text="Bread: ..."
+        app:layout_constraintTop_toBottomOf="@+id/summary_description_tv_sandwich"
+        app:layout_constraintLeft_toLeftOf="@+id/summary_description_tv_sandwich"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/summary_paid_addOns"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        tools:text="Paid Add Ons: ......"
+        app:layout_constraintTop_toBottomOf="@+id/summary_bread_tv_sandwich"
+        app:layout_constraintLeft_toLeftOf="@id/summary_bread_tv_sandwich"
+        android:layout_marginTop="4dp"/>
+
+    <TextView
+        android:id="@+id/summary_veges"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        tools:text="Vegetables: ......"
+        app:layout_constraintTop_toBottomOf="@+id/summary_paid_addOns"
+        app:layout_constraintLeft_toLeftOf="@id/summary_paid_addOns"
+        android:layout_marginTop="4dp"/>
+
+    <TextView
+        android:id="@+id/summary_sauces"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        tools:text="Sauces: ......"
+        app:layout_constraintTop_toBottomOf="@+id/summary_veges"
+        app:layout_constraintLeft_toLeftOf="@id/summary_veges"
+        android:layout_marginTop="4dp" />
+
+</android.support.constraint.ConstraintLayout>

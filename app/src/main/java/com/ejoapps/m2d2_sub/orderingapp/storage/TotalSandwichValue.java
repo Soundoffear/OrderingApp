@@ -25,9 +25,9 @@ public class TotalSandwichValue {
 
     private static String alwaysTwoDecimal(double value) {
         DecimalFormat valueDecimal = new DecimalFormat("0.00");
-        String valueFormated = valueDecimal.format(value);
+        String valueFormatted = valueDecimal.format(value);
 
-        return valueFormated;
+        return valueFormatted + " PLN";
     }
 
 

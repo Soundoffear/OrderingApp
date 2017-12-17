@@ -18,6 +18,10 @@
     <string name="zero">0</string>
     <string name="final_price">Cena Koncowa</string>
     <string name="sauces">SAUCES</string>
+    <string name="order_total">Order Total</string>
+    <string name="dummyPrice">1000 PLN</string>
+    <string name="cancel">Cancel</string>
+    <string name="place_order">Place Order</string>
 
 
 </resources>

@@ -2,6 +2,7 @@ package com.ejoapps.m2d2_sub.orderingapp.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +12,10 @@ import android.widget.TextView;
 import com.ejoapps.m2d2_sub.orderingapp.R;
 import com.ejoapps.m2d2_sub.orderingapp.SandwichBuilderActivity;
 import com.ejoapps.m2d2_sub.orderingapp.containers.SandwichNameData;
+import com.ejoapps.m2d2_sub.orderingapp.storage.SandwichListStorage;
 import com.ejoapps.m2d2_sub.orderingapp.storage.TotalSandwichValue;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -24,11 +27,13 @@ public class SandwichNamesAndDescAdapter extends RecyclerView.Adapter<SandwichNa
     private Context aContext;
     private List<SandwichNameData> aNamesData;
     private static CheckBox lastCheckedBox = null;
+    private String carrierChosen;
     private static int lastCheckedPosition;
 
-    public SandwichNamesAndDescAdapter(Context context, List<SandwichNameData> nameData) {
+    public SandwichNamesAndDescAdapter(Context context, List<SandwichNameData> nameData, String carrierType) {
         this.aContext = context;
         this.aNamesData = nameData;
+        this.carrierChosen = carrierType;
     }
 
     @Override
@@ -42,6 +47,8 @@ public class SandwichNamesAndDescAdapter extends RecyclerView.Adapter<SandwichNa
         return new SND_ViewHolder(sandwichView);
     }
 
+    private double priceDouble;
+
     @Override
     public void onBindViewHolder(final SND_ViewHolder holder, int position) {
 
@@ -49,9 +56,22 @@ public class SandwichNamesAndDescAdapter extends RecyclerView.Adapter<SandwichNa
         String description = aNamesData.get(position).getsDescription();
         final String price = aNamesData.get(position).getsPrice();
 
+        if(carrierChosen.equals(SandwichListStorage.CARRIER_SUB15)) {
+            priceDouble = Double.parseDouble(price);
+        } else if (carrierChosen.equals(SandwichListStorage.CARRIER_SUB30)) {
+            priceDouble = Double.parseDouble(price) + 8.00;
+        } else if (carrierChosen.equals(SandwichListStorage.CARRIER_WRAP)) {
+            priceDouble = Double.parseDouble(price);
+        } else if (carrierChosen.equals(SandwichListStorage.CARRIER_SALAD)) {
+            priceDouble = Double.parseDouble(price) + 2.00;
+        }
+
+        DecimalFormat decimalPrice = new DecimalFormat("0.00");
+        String decimalFormattedPrice = decimalPrice.format(priceDouble) + " PLN";
+
         holder.sTitle.setText(name);
         holder.sDescription.setText(description);
-        holder.sPrice.setText(price + " PLN");
+        holder.sPrice.setText(decimalFormattedPrice);
 
         //Set Tag to CheckBox
         holder.sTitle.setTag(Integer.valueOf(position));
@@ -75,7 +95,18 @@ public class SandwichNamesAndDescAdapter extends RecyclerView.Adapter<SandwichNa
 
                     lastCheckedBox = checkBox;
                     lastCheckedPosition = checkedTag;
-                    TotalSandwichValue.sandwichValue = Double.parseDouble(price);
+
+                    if(carrierChosen.equals(SandwichListStorage.CARRIER_SUB15)) {
+                        priceDouble = Double.parseDouble(price);
+                    } else if (carrierChosen.equals(SandwichListStorage.CARRIER_SUB30)) {
+                        priceDouble = Double.parseDouble(price) + 8.00;
+                    } else if (carrierChosen.equals(SandwichListStorage.CARRIER_WRAP)) {
+                        priceDouble = Double.parseDouble(price);
+                    } else if (carrierChosen.equals(SandwichListStorage.CARRIER_SALAD)) {
+                        priceDouble = Double.parseDouble(price) + 2.00;
+                    }
+
+                    TotalSandwichValue.sandwichValue = priceDouble;
                     SandwichBuilderActivity.setFinalPrice(TotalSandwichValue.finalValue());
                 }
                 else

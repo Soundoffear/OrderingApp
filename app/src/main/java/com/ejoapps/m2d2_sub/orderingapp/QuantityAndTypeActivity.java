@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.ejoapps.m2d2_sub.orderingapp.adapters.QuantityAndTypeAdapter;
+import com.ejoapps.m2d2_sub.orderingapp.database_preload.SandwichFinalDatabase;
+import com.ejoapps.m2d2_sub.orderingapp.storage.SandwichListStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +47,6 @@ public class QuantityAndTypeActivity extends AppCompatActivity implements View.O
 
     }
 
-    private ArrayList<String> tempKeyList = new ArrayList<>();
     public static final String TEMP_KEYS = "array-of-temp-keys";
     public static final String ARRAY_KEY_BUNDLE = "array-bundle";
     public static final ArrayList<String> CARRIES_CHECK = new ArrayList<>();
@@ -56,6 +57,10 @@ public class QuantityAndTypeActivity extends AppCompatActivity implements View.O
     @Override
     public void onClick(View v) {
 
+        SandwichFinalDatabase db = new SandwichFinalDatabase(this);
+        db.deleteAllRecords();
+
+        SandwichListStorage.isSandwichBuilt = true;
         CARRIES_CHECK.clear();
         CARRIES_QUANTITY.clear();
 
@@ -88,7 +93,6 @@ public class QuantityAndTypeActivity extends AppCompatActivity implements View.O
 
                 break;
             default:
-                return;
         }
 
     }

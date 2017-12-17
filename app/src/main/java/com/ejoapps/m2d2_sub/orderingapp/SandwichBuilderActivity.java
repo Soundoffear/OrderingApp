@@ -1,5 +1,6 @@
 package com.ejoapps.m2d2_sub.orderingapp;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,10 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ejoapps.m2d2_sub.orderingapp.adapters.PaidAddOnsAdapter;
 import com.ejoapps.m2d2_sub.orderingapp.adapters.SandwichNamesAndDescAdapter;
 import com.ejoapps.m2d2_sub.orderingapp.containers.BreadTypesData;
+import com.ejoapps.m2d2_sub.orderingapp.containers.FinalSandwichData;
 import com.ejoapps.m2d2_sub.orderingapp.containers.PaidAddOnsData;
 import com.ejoapps.m2d2_sub.orderingapp.containers.SandwichNameData;
 import com.ejoapps.m2d2_sub.orderingapp.containers.SauceData;
@@ -52,6 +55,8 @@ public class SandwichBuilderActivity extends AppCompatActivity implements View.O
 
     Button orderBtn;
 
+    private String carrierType;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +68,11 @@ public class SandwichBuilderActivity extends AppCompatActivity implements View.O
 
         orderBtn.setOnClickListener(this);
 
-        Log.d("Test temp Keys 3", SandwichListStorage.allCarriersTogether.get(SandwichListStorage.positionFromToReplace));
+        Intent intentThatStartedBuilder = getIntent();
+        Bundle bundle = intentThatStartedBuilder.getExtras();
+        carrierType = bundle.getString(SandwichListActivity.CARRIER_TYPE_TO_BUILDER);
+
+        Log.d("Test temp Keys 3", carrierType);
         SandwichBuilderDatabase sandwichBuilderDatabase = new SandwichBuilderDatabase(this);
         sandwichNameList = sandwichBuilderDatabase.getSandwichNameAllData(ContractSandwichBuilder.SandwichNames.TABLE_NAME_SANDWICH_NAMES);
 
@@ -71,7 +80,7 @@ public class SandwichBuilderActivity extends AppCompatActivity implements View.O
         sandwichNDP.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(SandwichBuilderActivity.this);
         sandwichNDP.setLayoutManager(linearLayoutManager);
-        SandwichNamesAndDescAdapter sandwichNamesAndDescAdapter = new SandwichNamesAndDescAdapter(SandwichBuilderActivity.this, sandwichNameList);
+        SandwichNamesAndDescAdapter sandwichNamesAndDescAdapter = new SandwichNamesAndDescAdapter(SandwichBuilderActivity.this, sandwichNameList, carrierType);
         sandwichNDP.setAdapter(sandwichNamesAndDescAdapter);
 
         breadTypesList = sandwichBuilderDatabase.getBreadTypeAllData();
@@ -91,7 +100,7 @@ public class SandwichBuilderActivity extends AppCompatActivity implements View.O
         LinearLayoutManager llManager = new LinearLayoutManager(this);
         paidAddsRecView.setHasFixedSize(true);
         paidAddsRecView.setLayoutManager(llManager);
-        PaidAddOnsAdapter paidAddOnsAdapter = new PaidAddOnsAdapter(this, paidAddOnList);
+        PaidAddOnsAdapter paidAddOnsAdapter = new PaidAddOnsAdapter(this, paidAddOnList, carrierType);
         paidAddsRecView.setAdapter(paidAddOnsAdapter);
 
 
@@ -122,7 +131,7 @@ public class SandwichBuilderActivity extends AppCompatActivity implements View.O
     }
 
 
-    public static final void setFinalPrice(String value) {
+    public static void setFinalPrice(String value) {
         finalPrice.setText(value);
     }
 
@@ -174,22 +183,35 @@ public class SandwichBuilderActivity extends AppCompatActivity implements View.O
                     }
                 }
 
+                // Building Final Price and String for DB
                 StringBuilder choosenSandwichAndPrice = new StringBuilder();
                 choosenSandwichAndPrice.append(sandwichName)
                         .append("_")
                         .append("BLA BLA BLA")
                         .append("_")
-                        .append(finalPrice.getText().toString() + " PLN");
+                        .append(finalPrice.getText().toString());
                 SandwichListStorage.allCarriersTogether.remove(SandwichListStorage.positionFromToReplace);
                 SandwichListStorage.allCarriersTogether.add(SandwichListStorage.positionFromToReplace, choosenSandwichAndPrice.toString());
 
-                Log.d("Test fetching data", choosenSandwichAndPrice.toString());
+                SandwichFinalDatabase sandwichFinalDatabase = new SandwichFinalDatabase(this);
+                FinalSandwichData finalSandwichData = new FinalSandwichData(carrierType,
+                        sandwichName,
+                        breadType,
+                        paidAdds,
+                        allVeges.toString(),
+                        allSauces.toString(),
+                        finalPrice.getText().toString());
+                sandwichFinalDatabase.insertDataIntoFinalSubDB(finalSandwichData);
+
+                Toast.makeText(this, "Sandwich Created", Toast.LENGTH_SHORT).show();
+
+                
+
                 break;
         }
+
+
     }
 
-
-    //TODO Add method for summing all of the selected item together
-    //TODO Add Method to confirm and remember all selected values (Database with updates, etc.)
 
 }

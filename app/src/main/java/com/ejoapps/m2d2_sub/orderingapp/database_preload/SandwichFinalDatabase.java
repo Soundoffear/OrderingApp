@@ -68,7 +68,7 @@ public class SandwichFinalDatabase extends SQLiteOpenHelper {
             if(cursor.moveToFirst()) {
                 do {
                     String sTag = cursor.getString(cursor.getColumnIndex(ContractFinalSandwich.FinalSandwichEntry.SUB_TAG));
-                    String sName = cursor.getString(cursor.getColumnIndex(ContractFinalSandwich.FinalSandwichEntry.TABLE_FINAL_SANDWICH));
+                    String sName = cursor.getString(cursor.getColumnIndex(ContractFinalSandwich.FinalSandwichEntry.SANDWICH_NAME));
                     String sBread = cursor.getString(cursor.getColumnIndex(ContractFinalSandwich.FinalSandwichEntry.BREAD_TYPE));
                     String sPaid = cursor.getString(cursor.getColumnIndex(ContractFinalSandwich.FinalSandwichEntry.PAID_ADD_ONS));
                     String sVege = cursor.getString(cursor.getColumnIndex(ContractFinalSandwich.FinalSandwichEntry.VEGETABLES));
@@ -80,10 +80,17 @@ public class SandwichFinalDatabase extends SQLiteOpenHelper {
             }
         }
 
-        cursor.close();
+        db.close();
 
         return finalSandwichDataList;
 
+    }
+
+    public void deleteAllRecords() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(ContractFinalSandwich.FinalSandwichEntry.TABLE_FINAL_SANDWICH, null, null);
+
+        db.close();
     }
 
 }
