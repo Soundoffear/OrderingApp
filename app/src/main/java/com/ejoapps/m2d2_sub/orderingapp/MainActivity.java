@@ -74,35 +74,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     void updateUI(FirebaseUser firebaseUser) {
         if (firebaseUser != null) {
-            Toast.makeText(this, "User logged in", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "User logged in" + firebaseUser.getEmail(), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "User NOT logged in", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private void createAccount(String emailAddress, String password) {
-
-        if(!validateInput()) {
-            return;
-        }
-
-        firebaseAuth.createUserWithEmailAndPassword(emailAddress, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Log.d("NEW USER", "createUserWithEmail: success");
-                            sendValidationEmail();
-                            tv_email.setText("Email: " + firebaseAuth.getCurrentUser().isEmailVerified());
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            Log.w("NEW USER", task.getException());
-                            Toast.makeText(MainActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
-                    }
-                });
     }
 
     private void signIn(String emailAddress, String password) {
@@ -134,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void signOut() {
         firebaseAuth.signOut();
-        updateUI(null);
     }
 
     private boolean validateInput() {
@@ -162,20 +136,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void goToNextActivity() {
         Intent intent = new Intent(MainActivity.this, FirstPageActivity.class);
         startActivity(intent);
-    }
-
-    private void sendValidationEmail() {
-        final FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        firebaseUser.sendEmailVerification().addOnCompleteListener(this, new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()) {
-                    Toast.makeText(MainActivity.this, "Email sent", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(MainActivity.this, "Failed to send email", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
 
     @Override
@@ -210,7 +170,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             });
 
         } else if (idView == R.id.btn_create_account) {
-            createAccount(emailValue.getText().toString(), passValue.getText().toString());
+            Intent intentToCreateUser = new Intent(MainActivity.this, CreateAccountActivity.class);
+            startActivity(intentToCreateUser);
         }
     }
 

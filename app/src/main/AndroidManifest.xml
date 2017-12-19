@@ -45,11 +45,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SandwichListActivity" />
         </activity>
-        <activity android:name=".OrderSummaryActivity"
+        <activity
+            android:name=".OrderSummaryActivity"
             android:parentActivityName=".SandwichListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SandwichListActivity" />
+        </activity>
+        <activity android:name=".CreateAccountActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
         </activity>
     </application>
 
