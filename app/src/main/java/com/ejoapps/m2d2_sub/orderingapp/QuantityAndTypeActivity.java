@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.ejoapps.m2d2_sub.orderingapp.adapters.QuantityAndTypeAdapter;
 import com.ejoapps.m2d2_sub.orderingapp.database_preload.SandwichFinalDatabase;
 import com.ejoapps.m2d2_sub.orderingapp.storage.SandwichListStorage;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +36,8 @@ public class QuantityAndTypeActivity extends AppCompatActivity implements View.O
         recyclerView.setLayoutManager(linearLayoutManager);
 
         Intent intent = getIntent();
-        List<String> carriersData = intent.getStringArrayListExtra("DATA_LIST");
+        Bundle receivedData = intent.getExtras();
+        List<String> carriersData = receivedData.getStringArrayList(FirstPageFragment.LIST_OF_TYPES);
 
         QuantityAndTypeAdapter quantityAndTypeAdapter = new QuantityAndTypeAdapter(this, carriersData, true);
         recyclerView.setAdapter(quantityAndTypeAdapter);

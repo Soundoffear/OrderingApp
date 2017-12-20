@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
         emailValue = findViewById(R.id.et_email_input);
         passValue = findViewById(R.id.et_password_input);
 
@@ -134,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void goToNextActivity() {
-        Intent intent = new Intent(MainActivity.this, FirstPageActivity.class);
+        Intent intent = new Intent(MainActivity.this, MainScreenNavDrawer.class);
         startActivity(intent);
     }
 

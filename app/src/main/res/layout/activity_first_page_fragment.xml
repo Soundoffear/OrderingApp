@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ejoapps.m2d2_sub.orderingapp.FirstPageFragment">
+
+    <Button
+        android:id="@+id/main_screen_btn_order_subs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Order Subs"
+        android:textColor="@android:color/black"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="32dp"/>
+
+    <Button
+        android:id="@+id/main_screen_btn_order_catering"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Order Catering"
+        android:textColor="@android:color/black"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_screen_btn_order_subs"
+        android:layout_marginTop="32dp"/>
+
+</android.support.constraint.ConstraintLayout>

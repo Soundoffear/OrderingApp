@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="navigation_items">
+        <item>Order</item>
+        <item>Coupons</item>
+        <item>Previous Orders</item>
+        <item>User Info</item>
+    </string-array>
+</resources>
