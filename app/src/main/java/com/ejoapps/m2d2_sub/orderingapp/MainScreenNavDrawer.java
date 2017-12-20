@@ -14,6 +14,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.ejoapps.m2d2_sub.orderingapp.fragments.FirstPageFragment;
+import com.ejoapps.m2d2_sub.orderingapp.fragments.UserDataFragment;
+
 public class MainScreenNavDrawer extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
@@ -92,6 +95,18 @@ public class MainScreenNavDrawer extends AppCompatActivity {
 
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.main_screen_primary_fragment, newFragment).commit();
+            mDrawerList.setItemChecked(position, true);
+            setTitle(itemsTitles[position]);
+            mDrawerLayout.closeDrawer(mDrawerList);
+        } else if(position == 1) {
+
+        } else if (position == 2) {
+
+        } else if (position == 3) {
+            Fragment userDataFragment = new UserDataFragment();
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.main_screen_primary_fragment, userDataFragment).commit();
             mDrawerList.setItemChecked(position, true);
             setTitle(itemsTitles[position]);
             mDrawerLayout.closeDrawer(mDrawerList);

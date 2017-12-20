@@ -1,4 +1,4 @@
-package com.ejoapps.m2d2_sub.orderingapp;
+package com.ejoapps.m2d2_sub.orderingapp.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.ejoapps.m2d2_sub.orderingapp.QuantityAndTypeActivity;
+import com.ejoapps.m2d2_sub.orderingapp.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ejoapps.m2d2_sub.orderingapp.fragments.UserDataFragment">
+
+    <TextView
+        android:id="@+id/udf_name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Name"
+        android:text="@string/name"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/udf_name_output"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Name"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/udf_surname_label"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/udf_surname_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Surname"
+        android:text="@string/surname"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/udf_name_label"
+        app:layout_constraintLeft_toLeftOf="@+id/udf_name_label"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/udf_surname_output"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Name"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/udf_name_output"
+        app:layout_constraintLeft_toRightOf="@+id/udf_surname_label"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/udf_phone_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Phone"
+        android:text="@string/surname"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/udf_surname_label"
+        app:layout_constraintLeft_toLeftOf="@+id/udf_surname_label"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/udf_phone_output"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="123 123 123"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/udf_surname_label"
+        app:layout_constraintLeft_toLeftOf="@+id/udf_surname_output"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/udf_e_mail_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="e-mail"
+        android:text="@string/surname"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/udf_phone_label"
+        app:layout_constraintLeft_toLeftOf="@+id/udf_phone_label"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/udf_e_mail_output"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="stefan.stefanowski@stefan.pl"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/udf_phone_label"
+        app:layout_constraintLeft_toLeftOf="@+id/udf_phone_output"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/udf_address_1_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="@string/delivery_address"
+        android:text="@string/delivery_address"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/udf_e_mail_label"
+        app:layout_constraintLeft_toLeftOf="@+id/udf_e_mail_label"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/udf_address_1_street_output"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Ul. Zachlapana"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/udf_e_mail_label"
+        app:layout_constraintLeft_toRightOf="@+id/udf_address_1_label"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/udf_address_1_number_output"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="10A/10B"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/udf_address_1_street_output"
+        app:layout_constraintLeft_toLeftOf="@+id/udf_address_1_street_output"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/udf_address_1_city_output"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Smietniczek"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/udf_address_1_number_output"
+        app:layout_constraintLeft_toLeftOf="@+id/udf_address_1_street_output"
+        android:layout_marginTop="16dp"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/udf_linear_layout_button_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/udf_address_1_city_output"
+        android:layout_marginTop="16dp"
+        style="?android:buttonBarStyle"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/udf_cancel_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            style="?android:attr/buttonBarButtonStyle"/>
+
+        <Button
+            android:id="@+id/udf_edit_user_data_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_data"
+            style="?android:attr/buttonBarButtonStyle"/>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

@@ -36,7 +36,7 @@
 
     <string name="DRAWER_OPEN">DRAWER_HAS_BEEN_OPENED</string>
     <string name="DRAWER_CLOSE">DRAWER_HAS_BEEN_CLOSED</string>
-
+    <string name="edit_data">Edit Data</string>
 
 
 </resources>

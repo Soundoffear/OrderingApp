@@ -17,20 +17,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".FirstPageActivity"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
-        <activity
-            android:name=".QuantityAndTypeActivity"
-            android:parentActivityName=".FirstPageActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".FirstPageActivity" />
-        </activity>
-        <activity
             android:name=".SandwichListActivity"
             android:parentActivityName=".QuantityAndTypeActivity"
             android:theme="@style/SandwichList">
@@ -59,12 +45,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".MainScreenNavDrawer"
+        <activity
+            android:name=".MainScreenNavDrawer"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity android:name=".fragments.UserDataFragment"></activity>
     </application>
 
 </manifest>

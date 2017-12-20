@@ -12,9 +12,8 @@ import android.widget.TextView;
 
 import com.ejoapps.m2d2_sub.orderingapp.adapters.QuantityAndTypeAdapter;
 import com.ejoapps.m2d2_sub.orderingapp.database_preload.SandwichFinalDatabase;
+import com.ejoapps.m2d2_sub.orderingapp.fragments.FirstPageFragment;
 import com.ejoapps.m2d2_sub.orderingapp.storage.SandwichListStorage;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;

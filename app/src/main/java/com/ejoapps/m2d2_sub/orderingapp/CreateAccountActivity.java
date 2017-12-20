@@ -1,16 +1,14 @@
 package com.ejoapps.m2d2_sub.orderingapp;
 
 import android.content.Intent;
-import android.provider.ContactsContract;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ejoapps.m2d2_sub.orderingapp.containers.UserData;
@@ -37,6 +35,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     Button cancel;
 
     FirebaseAuth firebaseAuth;
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,22 +62,6 @@ public class CreateAccountActivity extends AppCompatActivity {
             public void onClick(View v) {
                 createAccount(et_email.getText().toString(), et_password.getText().toString());
 
-                String sName = et_name.getText().toString();
-                String sSurname = et_surname.getText().toString();
-                String sMobilePhone = et_mobile_phone.getText().toString();
-                String sAddressStreet = et_address_street.getText().toString();
-                String sAddressNumber = et_address_number.getText().toString();
-                String sAddressCity = et_address_city.getText().toString();
-                String sEmail = et_email.getText().toString();
-
-                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                DatabaseReference databaseReference = firebaseDatabase.getReference("clients");
-                String userID = databaseReference.push().getKey();
-
-                UserData userData = new UserData(sName, sSurname, sMobilePhone, sAddressStreet, sAddressNumber, sAddressCity, sEmail);
-
-                databaseReference.child(userID).setValue(userData);
-
             }
         });
 
@@ -94,7 +77,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     private void createAccount(String emailAddress, String password) {
 
-        if(!validateInput()) {
+        if (!validateInput()) {
             return;
         }
 
@@ -105,7 +88,8 @@ public class CreateAccountActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Log.d("NEW USER", "createUserWithEmail: success");
                             sendValidationEmail();
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
+                            user = firebaseAuth.getCurrentUser();
+                            createUserData(user);
                         } else {
                             Log.w("NEW USER", task.getException());
                             Toast.makeText(CreateAccountActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
@@ -114,11 +98,30 @@ public class CreateAccountActivity extends AppCompatActivity {
                 });
     }
 
+    private void createUserData(FirebaseUser fUser) {
+        String sName = et_name.getText().toString();
+        String sSurname = et_surname.getText().toString();
+        String sMobilePhone = et_mobile_phone.getText().toString();
+        String sAddressStreet = et_address_street.getText().toString();
+        String sAddressNumber = et_address_number.getText().toString();
+        String sAddressCity = et_address_city.getText().toString();
+        String sEmail = et_email.getText().toString();
+
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference("clients");
+        String userID = fUser.getUid();
+        Log.d("USER ID", userID);
+
+        UserData userData = new UserData(sName, sSurname, sMobilePhone, sAddressStreet, sAddressNumber, sAddressCity, sEmail);
+
+        databaseReference.child(userID).setValue(userData);
+    }
+
     private boolean validateInput() {
         boolean validate = true;
 
         String email = et_email.getText().toString();
-        if(TextUtils.isEmpty(email)) {
+        if (TextUtils.isEmpty(email)) {
             et_email.setError("Required");
             validate = false;
         } else {
@@ -126,7 +129,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         }
 
         String pass = et_password.getText().toString();
-        if(TextUtils.isEmpty(pass)) {
+        if (TextUtils.isEmpty(pass)) {
             et_password.setError("Required");
             validate = false;
         } else {
@@ -141,7 +144,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         firebaseUser.sendEmailVerification().addOnCompleteListener(this, new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()) {
+                if (task.isSuccessful()) {
                     Toast.makeText(CreateAccountActivity.this, "Email sent", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(CreateAccountActivity.this, "Failed to send email", Toast.LENGTH_SHORT).show();

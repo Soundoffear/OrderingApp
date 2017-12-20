@@ -51,7 +51,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        if(database == null) {
+            database.setPersistenceEnabled(true);
+        }
 
         emailValue = findViewById(R.id.et_email_input);
         passValue = findViewById(R.id.et_password_input);
@@ -76,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     void updateUI(FirebaseUser firebaseUser) {
         if (firebaseUser != null) {
-            Toast.makeText(this, "User logged in" + firebaseUser.getEmail(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "User logged in " + firebaseUser.getUid(), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "User NOT logged in", Toast.LENGTH_SHORT).show();
         }
