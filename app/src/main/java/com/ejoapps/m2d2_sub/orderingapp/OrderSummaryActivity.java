@@ -1,11 +1,12 @@
 package com.ejoapps.m2d2_sub.orderingapp;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -17,7 +18,7 @@ import com.ejoapps.m2d2_sub.orderingapp.storage.SandwichListStorage;
 import java.text.DecimalFormat;
 import java.util.List;
 
-public class OrderSummaryActivity extends AppCompatActivity {
+public class OrderSummaryActivity extends AppCompatActivity implements View.OnClickListener {
 
     RecyclerView orderSummaryRecyclerView;
 
@@ -27,10 +28,9 @@ public class OrderSummaryActivity extends AppCompatActivity {
     Button placeAnOrder;
 
     List<FinalSandwichData> finalSandwichDataList;
+    private double finalPriceAllSandwiches;
 
-    // TODO Refine looks and feel of OrderSummaryClass
-    // need to add total price functionality, get sandwich description
-    // TODO need to create connection to Firebase to place order
+    public static final String TOTAL_ORDER_FINAL = "total-order-final";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +41,9 @@ public class OrderSummaryActivity extends AppCompatActivity {
 
         cancelOrder = findViewById(R.id.order_btn_cancel_order);
         placeAnOrder = findViewById(R.id.order_btn_placeAnOrder);
+
+        placeAnOrder.setOnClickListener(this);
+        cancelOrder.setOnClickListener(this);
 
         totalSumMoney = findViewById(R.id.orderTotalSumTotalMoney);
 
@@ -55,11 +58,26 @@ public class OrderSummaryActivity extends AppCompatActivity {
         Log.d("Test Sum Price", String.valueOf(SandwichListStorage.allSandwichesTogether));
 
         Intent intentFromSandwichList = getIntent();
-        double finalPriceAllSandwiches = intentFromSandwichList.getDoubleExtra(SandwichListActivity.FINAL_PRICE_CALCULATED, 0);
+        finalPriceAllSandwiches = intentFromSandwichList.getDoubleExtra(SandwichListActivity.FINAL_PRICE_CALCULATED, 0);
         DecimalFormat format = new DecimalFormat("0.00");
         String finalPriceWithCurrency = format.format(finalPriceAllSandwiches) + " PLN";
 
         totalSumMoney.setText(finalPriceWithCurrency);
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.order_btn_placeAnOrder:
+                Intent intentToFinalOrder = new Intent(OrderSummaryActivity.this, OrderAddressAndFinalConfirmationActivity.class);
+                Bundle dataToCarryOver = new Bundle();
+                dataToCarryOver.putDouble(TOTAL_ORDER_FINAL, finalPriceAllSandwiches);
+                intentToFinalOrder.putExtras(dataToCarryOver);
+                startActivity(intentToFinalOrder);
+            case R.id.order_btn_cancel_order:
+
+        }
     }
 }

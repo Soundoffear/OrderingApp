@@ -2,8 +2,15 @@
 <resources>
     <string-array name="navigation_items">
         <item>Order</item>
+        <item>Current Order</item>
         <item>Coupons</item>
         <item>Previous Orders</item>
         <item>User Info</item>
+    </string-array>
+
+    <string-array name="address_spinner">
+        <item>Main Address</item>
+        <item>Pick-up at SUBWAY</item>
+        <item>New Address</item>
     </string-array>
 </resources>

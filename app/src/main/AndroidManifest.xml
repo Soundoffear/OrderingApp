@@ -52,7 +52,20 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".fragments.UserDataFragment"></activity>
+        <activity
+            android:name=".QuantityAndTypeActivity"
+            android:parentActivityName=".MainScreenNavDrawer">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainScreenNavDrawer" />
+        </activity>
+        <activity
+            android:name=".OrderAddressAndFinalConfirmationActivity"
+            android:parentActivityName=".OrderSummaryActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".OrderSummaryActivity" />
+        </activity>
     </application>
 
 </manifest>

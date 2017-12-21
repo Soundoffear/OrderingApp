@@ -125,7 +125,6 @@ public class PaidAddOnsAdapter extends RecyclerView.Adapter<PaidAddOnsAdapter.Pa
                 double privatePriceDouble = Double.parseDouble(splittedString[0]);
                 final String nameString = paidAddOnsDataList.get(position).getPaidAddOnName();
                 final String price = paidAddOnsDataList.get(position).getPaidAddOnPrice();
-                //final double priceDouble = Double.parseDouble(price);
                 String currentQuantity = holder.tvIncrement.getText().toString();
                 double currentQDouble = Double.parseDouble(currentQuantity);
 

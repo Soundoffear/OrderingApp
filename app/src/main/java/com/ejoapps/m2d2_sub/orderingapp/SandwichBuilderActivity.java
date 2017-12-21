@@ -140,7 +140,6 @@ public class SandwichBuilderActivity extends AppCompatActivity implements View.O
         int id = v.getId();
         switch (id) {
             case R.id.sub_build_btn_confirm_sub:
-                SandwichFinalDatabase finalDatabase = new SandwichFinalDatabase(this);
 
                 String sandwichName = null;
                 for (int i = 0; i < sandwichNDP.getAdapter().getItemCount(); i++) {
@@ -205,7 +204,8 @@ public class SandwichBuilderActivity extends AppCompatActivity implements View.O
 
                 Toast.makeText(this, "Sandwich Created", Toast.LENGTH_SHORT).show();
 
-                
+                Intent intentGoBackToList = new Intent(SandwichBuilderActivity.this, SandwichListActivity.class);
+                startActivity(intentGoBackToList);
 
                 break;
         }
