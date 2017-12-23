@@ -2,7 +2,7 @@
 <resources>
     <string-array name="navigation_items">
         <item>Order</item>
-        <item>Current Order</item>
+        <item>Order Status</item>
         <item>Coupons</item>
         <item>Previous Orders</item>
         <item>User Info</item>

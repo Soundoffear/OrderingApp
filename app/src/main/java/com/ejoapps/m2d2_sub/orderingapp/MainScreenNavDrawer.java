@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.ejoapps.m2d2_sub.orderingapp.fragments.CouponsFragment;
 import com.ejoapps.m2d2_sub.orderingapp.fragments.FirstPageFragment;
 import com.ejoapps.m2d2_sub.orderingapp.fragments.UserDataFragment;
 
@@ -38,7 +39,7 @@ public class MainScreenNavDrawer extends AppCompatActivity {
         itemsTitles = getResources().getStringArray(R.array.navigation_items);
         mTitle = mDrawerTitle = getTitle();
 
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.nav_drawer_list_item, itemsTitles));
+        mDrawerList.setAdapter(new ArrayAdapter<>(this, R.layout.nav_drawer_list_item, itemsTitles));
         mDrawerList.setOnItemClickListener(new NaviDrawerMainScreen());
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -65,7 +66,7 @@ public class MainScreenNavDrawer extends AppCompatActivity {
 
         mDrawerLayout.setDrawerListener(actionBarDrawerToggle);
 
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             selectItem(0);
         }
 
@@ -74,7 +75,7 @@ public class MainScreenNavDrawer extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(actionBarDrawerToggle.onOptionsItemSelected(item)) {
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
 
@@ -90,27 +91,35 @@ public class MainScreenNavDrawer extends AppCompatActivity {
     }
 
     private void selectItem(int position) {
-        if(position == 0) {
-            Fragment newFragment = new FirstPageFragment();
+        Fragment newFragment = null;
+        switch (position) {
+            case 0:
+                newFragment = new FirstPageFragment();
+                break;
+            case 1:
+                // still needs current order status
+                break;
+            case 2:
+                newFragment = new CouponsFragment();
+                break;
+            case 3:
+                // still needs previous orders list
+                break;
+            case 4:
+                newFragment = new UserDataFragment();
+                break;
+            default:
+                newFragment = new FirstPageFragment();
 
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.main_screen_primary_fragment, newFragment).commit();
-            mDrawerList.setItemChecked(position, true);
-            setTitle(itemsTitles[position]);
-            mDrawerLayout.closeDrawer(mDrawerList);
-        } else if(position == 1) {
-
-        } else if (position == 2) {
-
-        } else if (position == 3) {
-            Fragment userDataFragment = new UserDataFragment();
-
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.main_screen_primary_fragment, userDataFragment).commit();
-            mDrawerList.setItemChecked(position, true);
-            setTitle(itemsTitles[position]);
-            mDrawerLayout.closeDrawer(mDrawerList);
         }
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if(newFragment != null) {
+            fragmentManager.beginTransaction().replace(R.id.main_screen_primary_fragment, newFragment).commit();
+        }
+        mDrawerList.setItemChecked(position, true);
+        setTitle(itemsTitles[position]);
+        mDrawerLayout.closeDrawer(mDrawerList);
     }
 
     @Override

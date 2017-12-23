@@ -40,6 +40,8 @@
     <string name="total_bill_payment">Total Bill Payment:</string>
     <string name="confirm">Confirm</string>
     <string name="number">number</string>
+    <string name="next">Next</string>
+    <string name="add_catering_item_button">add catering item button</string>
 
 
 </resources>

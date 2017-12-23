@@ -41,7 +41,6 @@ public class SandwichListActivity extends AppCompatActivity implements TypeAndNu
         tempQuantity = QuantityAndTypeActivity.CARRIES_QUANTITY;
 
         if (SandwichListStorage.isSandwichBuilt) {
-            Log.d("TEST BOOL", "Test bolka");
             SandwichListStorage.allCarriersTogether.clear();
             populateAllCarriersList();
         }
@@ -52,19 +51,13 @@ public class SandwichListActivity extends AppCompatActivity implements TypeAndNu
         TypeAndNumberAdapter typeAndNumberAdapter = new TypeAndNumberAdapter(this, SandwichListStorage.allCarriersTogether, this);
         sub15RecView.setAdapter(typeAndNumberAdapter);
 
-        for (int i = 0; i < SandwichListStorage.allCarriersTogether.size(); i++) {
-            Log.d("Test temp Keys", SandwichListStorage.allCarriersTogether.get(i));
-        }
-
         buttonCheckOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SandwichFinalDatabase sandwichFinalDatabase = new SandwichFinalDatabase(getApplicationContext());
                 List<FinalSandwichData> newFinalData = sandwichFinalDatabase.getAllFinalSubData();
-                Log.d("TESTING BUTTON", "TESTING BUTTON");
                 double finalPriceValue = 0;
                 for(int i = 0; i < newFinalData.size(); i++) {
-                    Log.d("Testing Final DB:", newFinalData.get(i).getSubPrice() + " " + newFinalData.get(i).getSubName());
                     String fPrice = newFinalData.get(i).getSubPrice();
                     String[] singlePrice = fPrice.split(" ");
                     double singlePriceDouble = Double.parseDouble(singlePrice[0]);
