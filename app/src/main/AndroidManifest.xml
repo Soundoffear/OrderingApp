@@ -66,15 +66,25 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".OrderSummaryActivity" />
         </activity>
-        <activity android:name=".CateringOrderActivity"
+        <activity
+            android:name=".CateringOrderActivity"
             android:parentActivityName=".MainScreenNavDrawer">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainScreenNavDrawer" />
         </activity>
-        <activity android:name=".CateringListToBuildActivity"
+        <activity
+            android:name=".CateringListToBuildActivity"
             android:parentActivityName=".CateringOrderActivity">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".CateringOrderActivity"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".CateringOrderActivity" />
+        </activity>
+        <activity android:name=".CateringBuilderActivity"
+            android:parentActivityName=".CateringListToBuildActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".CateringListToBuildActivity"/>
         </activity>
     </application>
 

@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.ejoapps.m2d2_sub.orderingapp.adapters.OrderSummaryAdapter;
+import com.ejoapps.m2d2_sub.orderingapp.containers.CateringNameAndTypeData;
 import com.ejoapps.m2d2_sub.orderingapp.containers.FinalSandwichData;
 import com.ejoapps.m2d2_sub.orderingapp.database_preload.SandwichFinalDatabase;
 import com.ejoapps.m2d2_sub.orderingapp.storage.SandwichListStorage;
@@ -47,6 +48,23 @@ public class OrderSummaryActivity extends AppCompatActivity implements View.OnCl
 
         totalSumMoney = findViewById(R.id.orderTotalSumTotalMoney);
 
+        if(!SandwichListStorage.isComingFromCatering) {
+            sandwichV();
+        } else {
+
+        }
+
+    }
+
+    void cateringV() {
+        Intent cateringIntentData = getIntent();
+        Bundle cateringData = cateringIntentData.getExtras();
+        List<CateringNameAndTypeData> cateringNameAndTypeDataList = cateringData.getParcelableArrayList(CateringListToBuildActivity.FINAL_ORDER_DATA);
+        //TODO create recyclerView layout to be inflated for catering items
+        //TODO make sure everything is being counted and calculated as required
+    }
+
+    void sandwichV() {
         SandwichFinalDatabase sandwichFinalDatabase = new SandwichFinalDatabase(this);
         finalSandwichDataList = sandwichFinalDatabase.getAllFinalSubData();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -63,7 +81,6 @@ public class OrderSummaryActivity extends AppCompatActivity implements View.OnCl
         String finalPriceWithCurrency = format.format(finalPriceAllSandwiches) + " PLN";
 
         totalSumMoney.setText(finalPriceWithCurrency);
-
     }
 
     @Override

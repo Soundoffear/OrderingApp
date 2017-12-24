@@ -22,4 +22,6 @@ public class SandwichListStorage {
 
     public static List<String> allCarriersTogether = new ArrayList<>();
 
+    public static boolean isComingFromCatering = false;
+
 }
