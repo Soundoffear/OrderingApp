@@ -80,11 +80,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".CateringOrderActivity" />
         </activity>
-        <activity android:name=".CateringBuilderActivity"
+        <activity
+            android:name=".CateringBuilderActivity"
             android:parentActivityName=".CateringListToBuildActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".CateringListToBuildActivity"/>
+                android:value=".CateringListToBuildActivity" />
         </activity>
     </application>
 

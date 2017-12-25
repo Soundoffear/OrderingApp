@@ -1,8 +1,8 @@
 package com.ejoapps.m2d2_sub.orderingapp;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.ejoapps.m2d2_sub.orderingapp.adapters.CateringBuilderAdapter;
 import com.ejoapps.m2d2_sub.orderingapp.containers.CateringNameAndTypeData;
 import com.ejoapps.m2d2_sub.orderingapp.containers.SandwichNameData;
+import com.ejoapps.m2d2_sub.orderingapp.database_preload.CateringBuilderDatabase;
 import com.ejoapps.m2d2_sub.orderingapp.database_preload.ContractSandwichBuilder;
 import com.ejoapps.m2d2_sub.orderingapp.database_preload.SandwichBuilderDatabase;
 
@@ -26,12 +27,17 @@ public class CateringBuilderActivity extends AppCompatActivity implements View.O
     Button cancelButton;
     List<CateringNameAndTypeData> cateringNameAndTypeDataList;
     int positionInList;
-    double priceCatering;
+    String priceCatering;
+    String cateringName;
+    CateringBuilderDatabase cateringBuilderDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catering_builder2);
+
+        cateringBuilderDatabase = new CateringBuilderDatabase(this);
+        cateringNameAndTypeDataList = cateringBuilderDatabase.getAllCateringData();
 
         confirmButton = findViewById(R.id.catering_builder_btn_confirm);
         cancelButton = findViewById(R.id.catering_builder_btn_cancel);
@@ -41,9 +47,9 @@ public class CateringBuilderActivity extends AppCompatActivity implements View.O
         Intent intentFromBuildList = getIntent();
         Bundle receivedData = intentFromBuildList.getExtras();
         assert receivedData != null;
-        cateringNameAndTypeDataList = receivedData.getParcelableArrayList(CateringListToBuildActivity.LIST_OF_CATERING_ITEMS);
         positionInList = receivedData.getInt(CateringListToBuildActivity.POSITION_OF_ITEM_CATERING);
-        priceCatering = cateringNameAndTypeDataList.get(positionInList).getCateringPrice();
+        cateringName = cateringNameAndTypeDataList.get(positionInList).getCateringName();
+        priceCatering = cateringNameAndTypeDataList.get(positionInList).getsCateringPrice();
 
         cateringBuilderRecView = findViewById(R.id.catering_builder_recView);
 
@@ -58,32 +64,35 @@ public class CateringBuilderActivity extends AppCompatActivity implements View.O
 
     }
 
-    public static final String DATA_BACK_TO_LIST = "data-sent-back-to-list";
-
     @Override
     public void onClick(View v) {
         int buttonId = v.getId();
 
         switch (buttonId) {
             case R.id.catering_builder_btn_confirm:
-                StringBuilder stringBuilder = new StringBuilder();
+
+                ArrayList<String> tempString = new ArrayList<>();
+
                 for(int i = 0; i < cateringBuilderRecView.getChildCount(); i++) {
                     CheckBox singleCheckBox = cateringBuilderRecView.getChildAt(i).findViewById(R.id.cb_check_box_sandwich);
                     if(singleCheckBox.isChecked()) {
                         TextView selectedSandwichName = cateringBuilderRecView.getChildAt(i).findViewById(R.id.cb_sandwich_item_name);
-                        String sSandwichName = selectedSandwichName.getText().toString();
-                        stringBuilder.append(sSandwichName).append(", ");
+                        tempString.add(selectedSandwichName.getText().toString());
                     }
                 }
 
                 cateringNameAndTypeDataList.remove(positionInList);
-                CateringNameAndTypeData cateringNameAndTypeData = new CateringNameAndTypeData(stringBuilder.toString(), 0, priceCatering);
+                CateringNameAndTypeData cateringNameAndTypeData = new CateringNameAndTypeData(cateringName,
+                        tempString.get(0),
+                        tempString.get(1),
+                        tempString.get(2),
+                        tempString.get(3),
+                        String.valueOf(priceCatering));
                 cateringNameAndTypeDataList.add(positionInList, cateringNameAndTypeData);
 
+                cateringBuilderDatabase.updateItemsInCateringDB(cateringNameAndTypeData, (positionInList+1));
+
                 Intent intentBackToList = new Intent(CateringBuilderActivity.this, CateringListToBuildActivity.class);
-                Bundle dataBackToList = new Bundle();
-                dataBackToList.putParcelableArrayList(DATA_BACK_TO_LIST, (ArrayList) cateringNameAndTypeDataList);
-                intentBackToList.putExtras(dataBackToList);
                 startActivity(intentBackToList);
 
                 break;

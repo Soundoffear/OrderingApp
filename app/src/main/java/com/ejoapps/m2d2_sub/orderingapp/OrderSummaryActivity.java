@@ -10,9 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.ejoapps.m2d2_sub.orderingapp.adapters.CateringOrderSummaryAdapter;
 import com.ejoapps.m2d2_sub.orderingapp.adapters.OrderSummaryAdapter;
 import com.ejoapps.m2d2_sub.orderingapp.containers.CateringNameAndTypeData;
 import com.ejoapps.m2d2_sub.orderingapp.containers.FinalSandwichData;
+import com.ejoapps.m2d2_sub.orderingapp.database_preload.CateringBuilderDatabase;
 import com.ejoapps.m2d2_sub.orderingapp.database_preload.SandwichFinalDatabase;
 import com.ejoapps.m2d2_sub.orderingapp.storage.SandwichListStorage;
 
@@ -51,17 +53,32 @@ public class OrderSummaryActivity extends AppCompatActivity implements View.OnCl
         if(!SandwichListStorage.isComingFromCatering) {
             sandwichV();
         } else {
-
+            cateringV();
         }
 
     }
 
     void cateringV() {
-        Intent cateringIntentData = getIntent();
-        Bundle cateringData = cateringIntentData.getExtras();
-        List<CateringNameAndTypeData> cateringNameAndTypeDataList = cateringData.getParcelableArrayList(CateringListToBuildActivity.FINAL_ORDER_DATA);
+        double tempPrice = 0;
+        CateringBuilderDatabase cateringBuilderDatabase = new CateringBuilderDatabase(this);
+        List<CateringNameAndTypeData> cateringNameAndTypeDataList = cateringBuilderDatabase.getAllCateringData();
+        for(int i = 0; i < cateringNameAndTypeDataList.size(); i++) {
+            String priceStringWithCurrency = cateringNameAndTypeDataList.get(i).getsCateringPrice();
+            String[] splitPriceAndCurrency = priceStringWithCurrency.split(" ");
+            String priceOnly = splitPriceAndCurrency[0];
+            tempPrice = Double.parseDouble(priceOnly);
+            tempPrice ++;
+        }
+        CateringOrderSummaryAdapter cateringOrderSummaryAdapter = new CateringOrderSummaryAdapter(this, cateringNameAndTypeDataList);
         //TODO create recyclerView layout to be inflated for catering items
         //TODO make sure everything is being counted and calculated as required
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        orderSummaryRecyclerView.setHasFixedSize(true);
+        orderSummaryRecyclerView.setLayoutManager(linearLayoutManager);
+        orderSummaryRecyclerView.setAdapter(cateringOrderSummaryAdapter);
+        finalPriceAllSandwiches = tempPrice;
+        String sPriceFinal = new DecimalFormat("0.00").format(finalPriceAllSandwiches) + " PLN";
+        totalSumMoney.setText(sPriceFinal);
     }
 
     void sandwichV() {

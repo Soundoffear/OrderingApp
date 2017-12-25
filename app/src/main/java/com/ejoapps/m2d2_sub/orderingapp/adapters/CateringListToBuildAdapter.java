@@ -40,7 +40,11 @@ public class CateringListToBuildAdapter extends RecyclerView.Adapter<CateringLis
     @Override
     public void onBindViewHolder(CateringListToBuildViewHolder holder, int position) {
         holder.tv_cateringName.setText(cateringNameAndTypeDataList.get(position).getCateringName());
-        holder.tv_cateringPrice.setText(String.valueOf(cateringNameAndTypeDataList.get(position).getCateringPrice()));
+        holder.tv_cateringPrice.setText(cateringNameAndTypeDataList.get(position).getsCateringPrice());
+        holder.tv_sub1.setText(cateringNameAndTypeDataList.get(position).getSub1());
+        holder.tv_sub2.setText(cateringNameAndTypeDataList.get(position).getSub2());
+        holder.tv_sub3.setText(cateringNameAndTypeDataList.get(position).getSub3());
+        holder.tv_sub4.setText(cateringNameAndTypeDataList.get(position).getSub4());
     }
 
     @Override
@@ -52,11 +56,19 @@ public class CateringListToBuildAdapter extends RecyclerView.Adapter<CateringLis
 
         TextView tv_cateringName;
         TextView tv_cateringPrice;
+        TextView tv_sub1;
+        TextView tv_sub2;
+        TextView tv_sub3;
+        TextView tv_sub4;
 
         public CateringListToBuildViewHolder(View itemView) {
             super(itemView);
             tv_cateringName = itemView.findViewById(R.id.catering_list_item_label);
             tv_cateringPrice = itemView.findViewById(R.id.catering_list_item_price);
+            tv_sub1 = itemView.findViewById(R.id.catering_list_sub1);
+            tv_sub2 = itemView.findViewById(R.id.catering_list_sub2);
+            tv_sub3 = itemView.findViewById(R.id.catering_list_sub3);
+            tv_sub4 = itemView.findViewById(R.id.catering_list_sub4);
 
             itemView.setOnClickListener(this);
         }

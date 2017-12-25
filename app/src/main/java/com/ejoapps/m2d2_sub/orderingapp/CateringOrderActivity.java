@@ -23,6 +23,8 @@ public class CateringOrderActivity extends AppCompatActivity implements View.OnC
 
     List<String> cateringItems;
 
+    public static boolean isCateringStarting = true;
+
     Button nextButton;
     Button cancelButton;
 
