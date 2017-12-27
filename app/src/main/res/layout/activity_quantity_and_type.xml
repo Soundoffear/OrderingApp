@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ejoapps.m2d2_sub.orderingapp.QuantityAndTypeActivity"
+    tools:context="com.ejoapps.m2d2_sub.orderingapp.SandwichQuantityAndTypeActivity"
     android:background="@android:color/holo_green_light">
 
     <android.support.v7.widget.RecyclerView

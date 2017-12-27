@@ -43,5 +43,12 @@
     <string name="next">Next</string>
     <string name="add_catering_item_button">add catering item button</string>
     <string name="sandwich">sandwich</string>
+    <string name="hot_drinks">Hot Drinks</string>
+    <string name="soft_drinks">Soft Drinks</string>
+    <string name="water">Water</string>
+    <string name="currency">PLN</string>
+    <string name="add_to_order">Add to Order</string>
+    <string name="total_drinks_value">Total Drinks Value:</string>
+    <string name="polish_currency_pln">PLN</string>
 
 </resources>

@@ -21,12 +21,26 @@
         android:layout_marginStart="8dp"/>
 
     <TextView
-        android:id="@+id/cat_order_sum_price"
+        android:id="@+id/cat_order_sum_price_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:textSize="16sp"
-        tools:text="xxx PLN"
+        tools:text="@string/zero"
+        app:layout_constraintRight_toLeftOf="@+id/cat_order_sum_price_currency"
+        app:layout_constraintTop_toTopOf="@+id/cat_order_sum_price_currency"
+        app:layout_constraintBottom_toBottomOf="@+id/cat_order_sum_price_currency"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"/>
+
+
+    <TextView
+        android:id="@+id/cat_order_sum_price_currency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        tools:text="@string/currency"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/cat_order_sum_label"
         app:layout_constraintBottom_toBottomOf="@+id/cat_order_sum_label"

@@ -73,9 +73,9 @@ public class CateringBuilderActivity extends AppCompatActivity implements View.O
 
                 ArrayList<String> tempString = new ArrayList<>();
 
-                for(int i = 0; i < cateringBuilderRecView.getChildCount(); i++) {
+                for (int i = 0; i < cateringBuilderRecView.getChildCount(); i++) {
                     CheckBox singleCheckBox = cateringBuilderRecView.getChildAt(i).findViewById(R.id.cb_check_box_sandwich);
-                    if(singleCheckBox.isChecked()) {
+                    if (singleCheckBox.isChecked()) {
                         TextView selectedSandwichName = cateringBuilderRecView.getChildAt(i).findViewById(R.id.cb_sandwich_item_name);
                         tempString.add(selectedSandwichName.getText().toString());
                     }
@@ -90,7 +90,7 @@ public class CateringBuilderActivity extends AppCompatActivity implements View.O
                         String.valueOf(priceCatering));
                 cateringNameAndTypeDataList.add(positionInList, cateringNameAndTypeData);
 
-                cateringBuilderDatabase.updateItemsInCateringDB(cateringNameAndTypeData, (positionInList+1));
+                cateringBuilderDatabase.updateItemsInCateringDB(cateringNameAndTypeData, (positionInList + 1));
 
                 Intent intentBackToList = new Intent(CateringBuilderActivity.this, CateringListToBuildActivity.class);
                 startActivity(intentBackToList);

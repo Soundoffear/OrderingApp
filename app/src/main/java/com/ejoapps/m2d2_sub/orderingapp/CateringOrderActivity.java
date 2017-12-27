@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 import com.ejoapps.m2d2_sub.orderingapp.adapters.CateringOrdersRecViewAdapter;
 import com.ejoapps.m2d2_sub.orderingapp.containers.CateringNameAndTypeData;
 import com.ejoapps.m2d2_sub.orderingapp.fragments.FirstPageFragment;
+import com.ejoapps.m2d2_sub.orderingapp.storage.SandwichListStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,16 +33,15 @@ public class CateringOrderActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catering_order);
 
+        SandwichListStorage.isSandwichBuilt = false;
+
         cateringItems = new ArrayList<>();
         nextButton = findViewById(R.id.co_btn_next_catering);
         nextButton.setOnClickListener(this);
         cancelButton = findViewById(R.id.co_btn_cancel_catering);
         cancelButton.setOnClickListener(this);
 
-        Intent cateringReceivedIntent = getIntent();
-        if(cateringReceivedIntent != null) {
-            cateringItems = cateringReceivedIntent.getExtras().getStringArrayList(FirstPageFragment.CATERING_TYPES);
-        }
+        cateringItems = FirstPageFragment.cateringTypeList;
 
         cateringOrdersRecyclerView = findViewById(R.id.co_recyclerView);
         cateringOrdersRecyclerView.setHasFixedSize(true);
@@ -60,6 +59,7 @@ public class CateringOrderActivity extends AppCompatActivity implements View.OnC
     public void onClick(View v) {
 
         List<CateringNameAndTypeData> allChosenCatering = new ArrayList<>();
+        allChosenCatering.clear();
         if (v.getId() == R.id.co_btn_next_catering) {
             int allItemsInRecView = cateringOrdersRecyclerView.getChildCount();
             for (int i = 0; i < allItemsInRecView; i++) {
@@ -69,17 +69,16 @@ public class CateringOrderActivity extends AppCompatActivity implements View.OnC
                 String sNumberOfItems = tv_numberOfItems.getText().toString();
                 TextView tv_cateringPrice = cateringOrdersRecyclerView.getChildAt(i).findViewById(R.id.catering_list_order_item_price);
                 int iNumberOfTypes = Integer.parseInt(sNumberOfItems);
-                Log.d("TEST TEST", "TEST ------------------ TEST");
                 if(iNumberOfTypes > 0) {
-                    // throws error because string to be parsed contains 'PLN'
                     String[] valueSplitted = tv_cateringPrice.getText().toString().split(" ");
                     double priceTotal = Double.parseDouble(valueSplitted[0]);
                     double noOfItems = (double) Integer.parseInt(tv_numberOfItems.getText().toString());
                     double pricePerOneItem = priceTotal / noOfItems;
-                    Log.d("PRICE PER ITEM", String.valueOf(pricePerOneItem));
                     CateringNameAndTypeData cateringNameAndTypeData = new CateringNameAndTypeData(sCateringType, iNumberOfTypes, pricePerOneItem);
                     allChosenCatering.add(cateringNameAndTypeData);
                 }
+                SandwichListStorage.isSandwichBuilt = true;
+                isCateringStarting = true;
                 Intent toCateringList = new Intent(CateringOrderActivity.this, CateringListToBuildActivity.class);
                 Bundle cateringBundle = new Bundle();
                 cateringBundle.putParcelableArrayList(CATERING_DATA_TRANSFER, (ArrayList) allChosenCatering);

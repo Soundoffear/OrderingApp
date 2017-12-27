@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.ejoapps.m2d2_sub.orderingapp.CateringOrderActivity;
-import com.ejoapps.m2d2_sub.orderingapp.QuantityAndTypeActivity;
+import com.ejoapps.m2d2_sub.orderingapp.SandwichQuantityAndTypeActivity;
 import com.ejoapps.m2d2_sub.orderingapp.R;
 import com.ejoapps.m2d2_sub.orderingapp.interfaces.OnGetDataListener;
 import com.google.firebase.database.DataSnapshot;
@@ -46,8 +46,8 @@ public class FirstPageFragment extends Fragment implements View.OnClickListener{
         return mainView;
     }
 
-    private List<String> sandwichTypesList;
-    private List<String> cateringTypeList;
+    public static List<String> sandwichTypesList;
+    public static List<String> cateringTypeList;
 
     @Override
     public void onStart() {
@@ -67,12 +67,14 @@ public class FirstPageFragment extends Fragment implements View.OnClickListener{
 
                 Map<String, Object> mappedData = (Map<String, Object>) dataSnapshot.child("sandwiches").child("types").getValue();
 
+                assert mappedData != null;
                 for (Map.Entry<String, Object> entry: mappedData.entrySet()) {
                     sandwichTypesList.add((String) entry.getValue());
                 }
 
                 Map<String, Object> mappedCateringData = (Map<String, Object>) dataSnapshot.child("catering").getValue();
 
+                assert mappedCateringData != null;
                 for(Map.Entry<String, Object> cateringEntry: mappedCateringData.entrySet()) {
                     cateringTypeList.add(cateringEntry.getKey()+"_"+cateringEntry.getValue());
                 }
@@ -118,7 +120,7 @@ public class FirstPageFragment extends Fragment implements View.OnClickListener{
         int id = v.getId();
         switch (id) {
             case R.id.main_screen_btn_order_subs:
-                Intent intent = new Intent(getContext(), QuantityAndTypeActivity.class);
+                Intent intent = new Intent(getContext(), SandwichQuantityAndTypeActivity.class);
                 Bundle transferData = new Bundle();
                 transferData.putStringArrayList(LIST_OF_TYPES, (ArrayList) sandwichTypesList);
                 intent.putExtras(transferData);

@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.ejoapps.m2d2_sub.orderingapp.adapters.QuantityAndTypeAdapter;
+import com.ejoapps.m2d2_sub.orderingapp.database_preload.OrderedDrinksDB;
 import com.ejoapps.m2d2_sub.orderingapp.database_preload.SandwichFinalDatabase;
 import com.ejoapps.m2d2_sub.orderingapp.fragments.FirstPageFragment;
 import com.ejoapps.m2d2_sub.orderingapp.storage.SandwichListStorage;
@@ -18,11 +19,18 @@ import com.ejoapps.m2d2_sub.orderingapp.storage.SandwichListStorage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuantityAndTypeActivity extends AppCompatActivity implements View.OnClickListener {
+public class SandwichQuantityAndTypeActivity extends AppCompatActivity implements View.OnClickListener {
 
     RecyclerView recyclerView;
     Button btn_next;
     Button btn_cancel;
+
+    public static final String TEMP_KEYS = "array-of-temp-keys";
+    public static final String ARRAY_KEY_BUNDLE = "array-bundle";
+    public static final ArrayList<String> CARRIES_CHECK = new ArrayList<>();
+
+    public static final ArrayList<Integer> CARRIES_QUANTITY = new ArrayList<>();
+    private Bundle arrayKeysBundle = new Bundle();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +44,7 @@ public class QuantityAndTypeActivity extends AppCompatActivity implements View.O
 
         Intent intent = getIntent();
         Bundle receivedData = intent.getExtras();
+        assert receivedData != null;
         List<String> carriersData = receivedData.getStringArrayList(FirstPageFragment.LIST_OF_TYPES);
 
         QuantityAndTypeAdapter quantityAndTypeAdapter = new QuantityAndTypeAdapter(this, carriersData, true);
@@ -47,14 +56,16 @@ public class QuantityAndTypeActivity extends AppCompatActivity implements View.O
         btn_cancel = findViewById(R.id.quantityButtonCancelOrder);
         btn_cancel.setOnClickListener(this);
 
+        clearAllSandwichDB();
+
     }
 
-    public static final String TEMP_KEYS = "array-of-temp-keys";
-    public static final String ARRAY_KEY_BUNDLE = "array-bundle";
-    public static final ArrayList<String> CARRIES_CHECK = new ArrayList<>();
-
-    public static final ArrayList<Integer> CARRIES_QUANTITY = new ArrayList<>();
-    private Bundle arrayKeysBundle = new Bundle();
+    private void clearAllSandwichDB() {
+        SandwichFinalDatabase sandwichFinalDatabase = new SandwichFinalDatabase(this);
+        sandwichFinalDatabase.deleteAllRecords();
+        OrderedDrinksDB orderedDrinksDB = new OrderedDrinksDB(this);
+        orderedDrinksDB.deleteAllDrinksData();
+    }
 
     @Override
     public void onClick(View v) {
@@ -70,7 +81,7 @@ public class QuantityAndTypeActivity extends AppCompatActivity implements View.O
         switch (id) {
             case R.id.quantityButtonNext:
 
-                Intent intent = new Intent(QuantityAndTypeActivity.this, SandwichListActivity.class);
+                Intent intent = new Intent(SandwichQuantityAndTypeActivity.this, SandwichListActivity.class);
 
                 for(int i = 0; i < recyclerView.getChildCount();i++) {
                     TextView recViewNameTV = recyclerView.getChildAt(i).findViewById(R.id.recyclerViewTypeName);

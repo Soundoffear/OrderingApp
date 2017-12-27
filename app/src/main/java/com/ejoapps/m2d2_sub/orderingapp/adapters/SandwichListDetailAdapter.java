@@ -12,18 +12,14 @@ import com.ejoapps.m2d2_sub.orderingapp.interfaces.TypeAndNumberClickListener;
 
 import java.util.List;
 
-/**
- * Created by soundoffear on 12/12/2017.
- */
-
-public class TypeAndNumberAdapter extends RecyclerView.Adapter<TypeAndNumberAdapter.TypeAndNumberViewHolder> {
+public class SandwichListDetailAdapter extends RecyclerView.Adapter<SandwichListDetailAdapter.TypeAndNumberViewHolder> {
 
     private Context mContext;
     private List<String> listOfItems;
 
-    public static TypeAndNumberClickListener numberClickListener;
+    private static TypeAndNumberClickListener numberClickListener;
 
-    public TypeAndNumberAdapter(Context context, List<String> stringList, TypeAndNumberClickListener typeAndNumberClickListener) {
+    public SandwichListDetailAdapter(Context context, List<String> stringList, TypeAndNumberClickListener typeAndNumberClickListener) {
         this.mContext = context;
         this.listOfItems = stringList;
         numberClickListener = typeAndNumberClickListener;
@@ -44,10 +40,11 @@ public class TypeAndNumberAdapter extends RecyclerView.Adapter<TypeAndNumberAdap
     public void onBindViewHolder(TypeAndNumberViewHolder holder, int position) {
 
         String[] splittedString = listOfItems.get(position).split("_");
+        String[] splittedPrice = splittedString[2].split(" ");
 
         holder.tvSubNameTemp.setText(splittedString[0]);
         holder.tvSubDescTemp.setText(splittedString[1]);
-        holder.tvPriceTemp.setText(splittedString[2]);
+        holder.tvPriceTemp.setText(splittedPrice[0]);
 
     }
 
@@ -62,12 +59,12 @@ public class TypeAndNumberAdapter extends RecyclerView.Adapter<TypeAndNumberAdap
         TextView tvSubDescTemp;
         TextView tvPriceTemp;
 
-        public TypeAndNumberViewHolder(View itemView) {
+        TypeAndNumberViewHolder(View itemView) {
             super(itemView);
 
             tvSubNameTemp = itemView.findViewById(R.id.sub_details_sub_name_label);
             tvSubDescTemp = itemView.findViewById(R.id.sub_details_sub_description_label);
-            tvPriceTemp = itemView.findViewById(R.id.sub_details_total_price_for_sub);
+            tvPriceTemp = itemView.findViewById(R.id.sub_details_sub_price_value);
 
             itemView.setOnClickListener(this);
         }

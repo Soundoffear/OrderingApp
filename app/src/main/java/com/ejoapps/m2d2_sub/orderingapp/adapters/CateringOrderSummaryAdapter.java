@@ -10,17 +10,12 @@ import android.widget.TextView;
 import com.ejoapps.m2d2_sub.orderingapp.R;
 import com.ejoapps.m2d2_sub.orderingapp.containers.CateringNameAndTypeData;
 
-import java.text.DecimalFormat;
 import java.util.List;
-
-/**
- * Created by soundoffear on 24/12/2017.
- */
 
 public class CateringOrderSummaryAdapter extends RecyclerView.Adapter<CateringOrderSummaryAdapter.CateringOrderSummaryViewHolder> {
 
-    Context tContext;
-    List<CateringNameAndTypeData> nameAndTypeDataList;
+    private Context tContext;
+    private List<CateringNameAndTypeData> nameAndTypeDataList;
 
     public CateringOrderSummaryAdapter(Context tContext, List<CateringNameAndTypeData> nameAndTypeDataList) {
         this.tContext = tContext;
@@ -41,12 +36,11 @@ public class CateringOrderSummaryAdapter extends RecyclerView.Adapter<CateringOr
     public void onBindViewHolder(CateringOrderSummaryViewHolder holder, int position) {
 
         String name = nameAndTypeDataList.get(position).getCateringName();
-        double price = nameAndTypeDataList.get(position).getCateringPrice();
-
-        String priceFormated = new DecimalFormat("0.00").format(price) + " PLN";
+        String price = nameAndTypeDataList.get(position).getsCateringPrice();
 
         holder.tv_name.setText(name);
-        holder.tv_price.setText(priceFormated);
+        holder.tv_priceValue.setText(price);
+        holder.tv_priceCurrency.setText(R.string.currency);
 
     }
 
@@ -58,13 +52,15 @@ public class CateringOrderSummaryAdapter extends RecyclerView.Adapter<CateringOr
     class CateringOrderSummaryViewHolder extends RecyclerView.ViewHolder {
 
         TextView tv_name;
-        TextView tv_price;
+        TextView tv_priceValue;
+        TextView tv_priceCurrency;
 
-        public CateringOrderSummaryViewHolder(View view) {
+        CateringOrderSummaryViewHolder(View view) {
             super(view);
 
             tv_name = view.findViewById(R.id.cat_order_sum_label);
-            tv_price = view.findViewById(R.id.cat_order_sum_price);
+            tv_priceValue = view.findViewById(R.id.cat_order_sum_price_value);
+            tv_priceCurrency = view.findViewById(R.id.cat_order_sum_price_currency);
         }
 
     }

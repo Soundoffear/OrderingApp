@@ -37,8 +37,6 @@ public class OrderAddressAndFinalConfirmationActivity extends AppCompatActivity 
     EditText et_addressNumber_imput;
     EditText et_addressCity_input;
 
-    private double finalPrice;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,11 +91,7 @@ public class OrderAddressAndFinalConfirmationActivity extends AppCompatActivity 
         Intent intentFromSummary = getIntent();
         Bundle dataFromSummary = intentFromSummary.getExtras();
         assert dataFromSummary != null;
-        if (CateringListToBuildActivity.isCatering) {
-            finalPrice = dataFromSummary.getDouble(CateringListToBuildActivity.FINAL_ORDER_PRICE);
-        } else {
-            finalPrice = dataFromSummary.getDouble(OrderSummaryActivity.TOTAL_ORDER_FINAL);
-        }
+        double finalPrice = dataFromSummary.getDouble(OrderSummaryActivity.TOTAL_ORDER_FINAL);
 
         DecimalFormat format = new DecimalFormat("0.00");
         String sFinalPrice = format.format(finalPrice) + " PLN";

@@ -40,7 +40,9 @@ public class CateringListToBuildAdapter extends RecyclerView.Adapter<CateringLis
     @Override
     public void onBindViewHolder(CateringListToBuildViewHolder holder, int position) {
         holder.tv_cateringName.setText(cateringNameAndTypeDataList.get(position).getCateringName());
-        holder.tv_cateringPrice.setText(cateringNameAndTypeDataList.get(position).getsCateringPrice());
+        String[] splittedPriceAndCurrency = cateringNameAndTypeDataList.get(position).getsCateringPrice().split(" ");
+        holder.tv_cateringPriceValue.setText(splittedPriceAndCurrency[0]);
+        holder.tv_cateringPriceCurrency.setText(R.string.currency);
         holder.tv_sub1.setText(cateringNameAndTypeDataList.get(position).getSub1());
         holder.tv_sub2.setText(cateringNameAndTypeDataList.get(position).getSub2());
         holder.tv_sub3.setText(cateringNameAndTypeDataList.get(position).getSub3());
@@ -55,16 +57,18 @@ public class CateringListToBuildAdapter extends RecyclerView.Adapter<CateringLis
     class CateringListToBuildViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView tv_cateringName;
-        TextView tv_cateringPrice;
+        TextView tv_cateringPriceValue;
+        TextView tv_cateringPriceCurrency;
         TextView tv_sub1;
         TextView tv_sub2;
         TextView tv_sub3;
         TextView tv_sub4;
 
-        public CateringListToBuildViewHolder(View itemView) {
+        CateringListToBuildViewHolder(View itemView) {
             super(itemView);
             tv_cateringName = itemView.findViewById(R.id.catering_list_item_label);
-            tv_cateringPrice = itemView.findViewById(R.id.catering_list_item_price);
+            tv_cateringPriceValue = itemView.findViewById(R.id.catering_list_item_price_value);
+            tv_cateringPriceCurrency = itemView.findViewById(R.id.catering_list_item_price_currency);
             tv_sub1 = itemView.findViewById(R.id.catering_list_sub1);
             tv_sub2 = itemView.findViewById(R.id.catering_list_sub2);
             tv_sub3 = itemView.findViewById(R.id.catering_list_sub3);

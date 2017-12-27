@@ -18,11 +18,11 @@
         </activity>
         <activity
             android:name=".SandwichListActivity"
-            android:parentActivityName=".QuantityAndTypeActivity"
+            android:parentActivityName=".SandwichQuantityAndTypeActivity"
             android:theme="@style/SandwichList">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".QuantityAndTypeActivity" />
+                android:value=".SandwichQuantityAndTypeActivity" />
         </activity>
         <activity
             android:name=".SandwichBuilderActivity"
@@ -53,7 +53,7 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".QuantityAndTypeActivity"
+            android:name=".SandwichQuantityAndTypeActivity"
             android:parentActivityName=".MainScreenNavDrawer">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -87,6 +87,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".CateringListToBuildActivity" />
         </activity>
+        <activity android:name=".DrinksPickerActivity"></activity>
     </application>
 
 </manifest>

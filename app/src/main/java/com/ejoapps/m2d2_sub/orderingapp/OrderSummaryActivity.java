@@ -5,16 +5,18 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.ejoapps.m2d2_sub.orderingapp.adapters.CateringOrderSummaryAdapter;
+import com.ejoapps.m2d2_sub.orderingapp.adapters.DrinksResultAdapter;
 import com.ejoapps.m2d2_sub.orderingapp.adapters.OrderSummaryAdapter;
 import com.ejoapps.m2d2_sub.orderingapp.containers.CateringNameAndTypeData;
 import com.ejoapps.m2d2_sub.orderingapp.containers.FinalSandwichData;
+import com.ejoapps.m2d2_sub.orderingapp.containers.OrderedDrinksData;
 import com.ejoapps.m2d2_sub.orderingapp.database_preload.CateringBuilderDatabase;
+import com.ejoapps.m2d2_sub.orderingapp.database_preload.OrderedDrinksDB;
 import com.ejoapps.m2d2_sub.orderingapp.database_preload.SandwichFinalDatabase;
 import com.ejoapps.m2d2_sub.orderingapp.storage.SandwichListStorage;
 
@@ -59,29 +61,43 @@ public class OrderSummaryActivity extends AppCompatActivity implements View.OnCl
     }
 
     void cateringV() {
-        double tempPrice = 0;
+        double totalPrice = 0;
         CateringBuilderDatabase cateringBuilderDatabase = new CateringBuilderDatabase(this);
         List<CateringNameAndTypeData> cateringNameAndTypeDataList = cateringBuilderDatabase.getAllCateringData();
         for(int i = 0; i < cateringNameAndTypeDataList.size(); i++) {
             String priceStringWithCurrency = cateringNameAndTypeDataList.get(i).getsCateringPrice();
             String[] splitPriceAndCurrency = priceStringWithCurrency.split(" ");
             String priceOnly = splitPriceAndCurrency[0];
-            tempPrice = Double.parseDouble(priceOnly);
-            tempPrice ++;
+            double tempPrice = Double.parseDouble(priceOnly);
+            totalPrice += tempPrice;
         }
         CateringOrderSummaryAdapter cateringOrderSummaryAdapter = new CateringOrderSummaryAdapter(this, cateringNameAndTypeDataList);
-        //TODO create recyclerView layout to be inflated for catering items
-        //TODO make sure everything is being counted and calculated as required
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         orderSummaryRecyclerView.setHasFixedSize(true);
         orderSummaryRecyclerView.setLayoutManager(linearLayoutManager);
         orderSummaryRecyclerView.setAdapter(cateringOrderSummaryAdapter);
-        finalPriceAllSandwiches = tempPrice;
-        String sPriceFinal = new DecimalFormat("0.00").format(finalPriceAllSandwiches) + " PLN";
+
+        if(CateringListToBuildActivity.isDrinkPicked) {
+            OrderedDrinksDB orderedDrinksDB = new OrderedDrinksDB(this);
+            List<OrderedDrinksData> orderedDrinksDataList = orderedDrinksDB.getAllOrderedDataDrinks();
+            setDrinkRecView(orderedDrinksDataList);
+            if (orderedDrinksDataList.size() > 0) {
+                for (int i = 0; i < orderedDrinksDataList.size(); i++) {
+                    String drinkPrice = orderedDrinksDataList.get(i).getDrinkPrice();
+                    double dPrice = Double.parseDouble(drinkPrice);
+                    totalPrice += dPrice;
+                }
+            }
+        }
+
+        finalPriceAllSandwiches = totalPrice;
+
+        String sPriceFinal = new DecimalFormat("0.00").format(finalPriceAllSandwiches) + " " + getResources().getString(R.string.currency);
         totalSumMoney.setText(sPriceFinal);
     }
 
     void sandwichV() {
+        double totalPrice = 0;
         SandwichFinalDatabase sandwichFinalDatabase = new SandwichFinalDatabase(this);
         finalSandwichDataList = sandwichFinalDatabase.getAllFinalSubData();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -90,14 +106,38 @@ public class OrderSummaryActivity extends AppCompatActivity implements View.OnCl
         OrderSummaryAdapter orderSummaryAdapter = new OrderSummaryAdapter(this, finalSandwichDataList);
         orderSummaryRecyclerView.setAdapter(orderSummaryAdapter);
 
-        Log.d("Test Sum Price", String.valueOf(SandwichListStorage.allSandwichesTogether));
-
         Intent intentFromSandwichList = getIntent();
         finalPriceAllSandwiches = intentFromSandwichList.getDoubleExtra(SandwichListActivity.FINAL_PRICE_CALCULATED, 0);
-        DecimalFormat format = new DecimalFormat("0.00");
-        String finalPriceWithCurrency = format.format(finalPriceAllSandwiches) + " PLN";
 
+        if(SandwichListActivity.isDrinkSelected) {
+            OrderedDrinksDB orderedDrinksDB = new OrderedDrinksDB(this);
+            List<OrderedDrinksData> orderedDrinksDataList = orderedDrinksDB.getAllOrderedDataDrinks();
+            setDrinkRecView(orderedDrinksDataList);
+            if(orderedDrinksDataList.size() > 0) {
+                for(int i = 0; i< orderedDrinksDataList.size(); i++) {
+                    String drinkPrice = orderedDrinksDataList.get(i).getDrinkPrice();
+                    double dPrice = Double.parseDouble(drinkPrice);
+                    totalPrice += dPrice;
+                }
+            }
+        }
+
+
+        DecimalFormat format = new DecimalFormat("0.00");
+        finalPriceAllSandwiches += totalPrice;
+        String finalPriceWithCurrency = format.format(finalPriceAllSandwiches) + " " + getResources().getString(R.string.currency);
         totalSumMoney.setText(finalPriceWithCurrency);
+    }
+
+    private void setDrinkRecView(List<OrderedDrinksData> orderedDrinksDataList) {
+
+        RecyclerView drinksRecyclerView = findViewById(R.id.finalOrderDrinksRecyclerView);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        drinksRecyclerView.setHasFixedSize(true);
+        drinksRecyclerView.setLayoutManager(linearLayoutManager);
+        DrinksResultAdapter drinksRecyclerViewAdapter = new DrinksResultAdapter(orderedDrinksDataList);
+        drinksRecyclerView.setAdapter(drinksRecyclerViewAdapter);
+
     }
 
     @Override

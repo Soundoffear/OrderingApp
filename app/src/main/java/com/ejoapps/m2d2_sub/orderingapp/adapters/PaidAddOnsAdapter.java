@@ -18,10 +18,6 @@ import com.ejoapps.m2d2_sub.orderingapp.storage.TotalSandwichValue;
 import java.text.DecimalFormat;
 import java.util.List;
 
-/**
- * Created by soundoffear on 14/12/2017.
- */
-
 public class PaidAddOnsAdapter extends RecyclerView.Adapter<PaidAddOnsAdapter.PaidAddsViewHolder> {
 
     private Context mContext;
@@ -52,14 +48,19 @@ public class PaidAddOnsAdapter extends RecyclerView.Adapter<PaidAddOnsAdapter.Pa
     public void onBindViewHolder(final PaidAddsViewHolder holder, final int position) {
         final String nameString = paidAddOnsDataList.get(position).getPaidAddOnName();
         final String price = paidAddOnsDataList.get(position).getPaidAddOnPrice();
-        if(carrier.equals(SandwichListStorage.CARRIER_SUB15)) {
-            priceDouble = Double.parseDouble(price);
-        } else if (carrier.equals(SandwichListStorage.CARRIER_SUB30)) {
-            priceDouble = Double.parseDouble(price) * 2;
-        } else if (carrier.equals(SandwichListStorage.CARRIER_WRAP)) {
-            priceDouble = Double.parseDouble(price);
-        } else if (carrier.equals(SandwichListStorage.CARRIER_SALAD)) {
-            priceDouble = Double.parseDouble(price);
+        switch (carrier) {
+            case SandwichListStorage.CARRIER_SUB15:
+                priceDouble = Double.parseDouble(price);
+                break;
+            case SandwichListStorage.CARRIER_SUB30:
+                priceDouble = Double.parseDouble(price) * 2;
+                break;
+            case SandwichListStorage.CARRIER_WRAP:
+                priceDouble = Double.parseDouble(price);
+                break;
+            case SandwichListStorage.CARRIER_SALAD:
+                priceDouble = Double.parseDouble(price);
+                break;
         }
         holder.tvPaidName.setText(nameString);
 
@@ -86,14 +87,19 @@ public class PaidAddOnsAdapter extends RecyclerView.Adapter<PaidAddOnsAdapter.Pa
 
                 Log.d("CHEESE TEST", (currentQDouble > 1) + " " + String.valueOf(priceDouble));
 
-                if(carrier.equals(SandwichListStorage.CARRIER_SUB15)) {
-                    priceDouble = Double.parseDouble(price);
-                } else if (carrier.equals(SandwichListStorage.CARRIER_SUB30)) {
-                    priceDouble = Double.parseDouble(price) * 2;
-                } else if (carrier.equals(SandwichListStorage.CARRIER_WRAP)) {
-                    priceDouble = Double.parseDouble(price);
-                } else if (carrier.equals(SandwichListStorage.CARRIER_SALAD)) {
-                    priceDouble = Double.parseDouble(price);
+                switch (carrier) {
+                    case SandwichListStorage.CARRIER_SUB15:
+                        priceDouble = Double.parseDouble(price);
+                        break;
+                    case SandwichListStorage.CARRIER_SUB30:
+                        priceDouble = Double.parseDouble(price) * 2;
+                        break;
+                    case SandwichListStorage.CARRIER_WRAP:
+                        priceDouble = Double.parseDouble(price);
+                        break;
+                    case SandwichListStorage.CARRIER_SALAD:
+                        priceDouble = Double.parseDouble(price);
+                        break;
                 }
 
                 if (nameString.equals("Cheese")) {
@@ -128,14 +134,19 @@ public class PaidAddOnsAdapter extends RecyclerView.Adapter<PaidAddOnsAdapter.Pa
                 String currentQuantity = holder.tvIncrement.getText().toString();
                 double currentQDouble = Double.parseDouble(currentQuantity);
 
-                if(carrier.equals(SandwichListStorage.CARRIER_SUB15)) {
-                    priceDouble = Double.parseDouble(price);
-                } else if (carrier.equals(SandwichListStorage.CARRIER_SUB30)) {
-                    priceDouble = Double.parseDouble(price) * 2;
-                } else if (carrier.equals(SandwichListStorage.CARRIER_WRAP)) {
-                    priceDouble = Double.parseDouble(price);
-                } else if (carrier.equals(SandwichListStorage.CARRIER_SALAD)) {
-                    priceDouble = Double.parseDouble(price);
+                switch (carrier) {
+                    case SandwichListStorage.CARRIER_SUB15:
+                        priceDouble = Double.parseDouble(price);
+                        break;
+                    case SandwichListStorage.CARRIER_SUB30:
+                        priceDouble = Double.parseDouble(price) * 2;
+                        break;
+                    case SandwichListStorage.CARRIER_WRAP:
+                        priceDouble = Double.parseDouble(price);
+                        break;
+                    case SandwichListStorage.CARRIER_SALAD:
+                        priceDouble = Double.parseDouble(price);
+                        break;
                 }
 
                 if (currentQDouble >= 1) {
@@ -175,11 +186,6 @@ public class PaidAddOnsAdapter extends RecyclerView.Adapter<PaidAddOnsAdapter.Pa
         return decimalFormat.format(value);
     }
 
-    private double updateQuanityAndFinalPrice(double currentQuanity, double valuePerOne) {
-        double finalValueDouble = 0;
-        return finalValueDouble;
-    }
-
     @Override
     public int getItemCount() {
         return paidAddOnsDataList.size();
@@ -195,7 +201,7 @@ public class PaidAddOnsAdapter extends RecyclerView.Adapter<PaidAddOnsAdapter.Pa
         ImageButton btnRemove;
         ImageButton btnAdd;
 
-        public PaidAddsViewHolder(View itemView) {
+        PaidAddsViewHolder(View itemView) {
             super(itemView);
 
             tvPaidName = itemView.findViewById(R.id.sub_build_paid_adds_name_label);

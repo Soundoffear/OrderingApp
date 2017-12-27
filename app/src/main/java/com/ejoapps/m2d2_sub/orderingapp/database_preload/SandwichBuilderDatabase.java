@@ -15,14 +15,10 @@ import com.ejoapps.m2d2_sub.orderingapp.containers.VegetablesData;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by soundoffear on 13/12/2017.
- */
-
 public class SandwichBuilderDatabase extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 2;
-    public static final String DATABASE_NAME = "SandwichDetails";
+    private static final int DATABASE_VERSION = 2;
+    private static final String DATABASE_NAME = "SandwichDetails";
     private static SQLiteDatabase mDatabase;
 
     public SandwichBuilderDatabase (Context context) {
@@ -252,13 +248,10 @@ public class SandwichBuilderDatabase extends SQLiteOpenHelper {
             db = getWritableDatabase();
             db.delete(databaseName, null, null);
             db.close();
-        } else {
-            return;
         }
-
     }
 
-    public boolean dbExists(String tableName, boolean isOpen) {
+    private boolean dbExists(String tableName, boolean isOpen) {
         if(isOpen) {
             if(mDatabase == null || mDatabase.isOpen()) {
                 mDatabase = getReadableDatabase();
